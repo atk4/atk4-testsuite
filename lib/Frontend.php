@@ -58,7 +58,7 @@ class Frontend extends ApiFrontend {
          */
         $m=$this->add('Model_Examples');
         $l=$this->add('CompleteLister');
-        $l->setModel('Examples');
+        $l->setModel('Examples',array('name'));
         $l->addTotals();
         $l->addHook('formatRow',function($l){
             $n=$l->current_row['name'];
