@@ -52,13 +52,13 @@ class page_db3 extends Page_Tester {
   ),
 ),
         "Test_field3a"=>array (
-  0 => 'select `name`.`user`,`postcode`.`address`',
+  0 => 'select `user`.`name`,`address`.`postcode`',
   1 => 
   array (
   ),
 ),
         "Test_field4"=>array (
-  0 => 'select `name`.`address` `address_name`,`postcode`.`address`,`name`.`user`,`surname`.`user`',
+  0 => 'select `address`.`name` `address_name`,`address`.`postcode`,`user`.`name`,`user`.`surname`',
   1 => 
   array (
   ),
@@ -76,7 +76,7 @@ class page_db3 extends Page_Tester {
   ),
 ),
         "Test_field_subquery1"=>array (
-  0 => 'select (select [options] sum(pages) `pages` from `book` [join] [where] [group] [having] [order] [limit]) `total_pages`',
+  0 => 'select  (select  sum(pages) `pages` from `book`  where `author_id` = `author`.`id`    ) `total_pages` from `author`      ',
   1 => 
   array (
   ),
@@ -98,7 +98,6 @@ class page_db3 extends Page_Tester {
     }
     function test_render1($t){
         return $t->template('hello world');
-        //->table('user')->render();
     }
     function test_render2($t){
         return $t->template('hello [table]')->table('user');
@@ -142,7 +141,8 @@ class page_db3 extends Page_Tester {
             ->field($t->expr('len(name)')); // missing alias
     }
     function test_field_subquery1($t){
-        return $t->template('select [field]')
+        return $t
+            ->table('author')
             ->field(
                 $t->dsql()
                 ->table('book')

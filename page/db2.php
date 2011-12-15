@@ -64,7 +64,7 @@ class page_db2 extends Page_Tester {
   ),
 ),
         "Test_table_get2"=>array (
-  0 => '`foo`, `bar`',
+  0 => '`foo`,`bar`',
   1 => 
   array (
   ),
@@ -82,19 +82,19 @@ class page_db2 extends Page_Tester {
   ),
 ),
         "Test_table_get5"=>array (
-  0 => '`foo`, `bar`',
+  0 => '`foo`,`bar`',
   1 => 
   array (
   ),
 ),
         "Test_table_get6"=>array (
-  0 => '`foo` `a`, `bar` `b`',
+  0 => '`foo` `a`,`bar` `b`',
   1 => 
   array (
   ),
 ),
         "Test_table_get7"=>array (
-  0 => '`foo`, `foo`',
+  0 => '`foo`,`foo`',
   1 => 
   array (
   ),

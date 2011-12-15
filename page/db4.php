@@ -16,11 +16,15 @@ class page_db4 extends Page_Tester {
         if($this->input[0]->params)$row[$key.'_para']=print_r($this->input[0]->params,true);
         return array($x,$this->input[0]->params);
     }
-    function test_where1($t){
-        return $t->where('id',1);
+    function test_combi($t){
+        $t->table('book')->where('id',1)->set('name','Foo');
+        return $t->select().' => '.$t->update();
+    }
+    function test_join1($t){
+        return $t->table('user');
     }
     function test_render2($t){
-        return $t->template('hello [table]')->table('user');
+        return $t->table('user')->join('address');
     }
 
 }
