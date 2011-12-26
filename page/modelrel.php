@@ -8,7 +8,7 @@ class page_modelrel extends Page_Tester {
     }
     function prepare(){
         $m=$this->add('Model_Table');
-        $m->entity_code='user';
+        $m->table='user';
         $m->addField('name');
         $m->addField('age')->calculated(function(){
             return 'length(name)';

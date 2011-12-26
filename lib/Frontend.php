@@ -13,7 +13,7 @@ class Link extends HtmlElement {
     }
 }
 
-class Model_Examples extends Model_Array {
+class Model_Examples extends Model {
     public $dir;
     function init(){
         parent::init();
@@ -21,7 +21,7 @@ class Model_Examples extends Model_Array {
         $this->addField('name');
 
         $p=$this->api->pathfinder->searchDir('page');
-        $this->setAssoc($p);
+        $this->setSource('ArrayAssoc',$p);
         return $this;
     }
 

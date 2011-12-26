@@ -83,7 +83,7 @@ class page_db3 extends Page_Tester {
 )
     );
     function init(){
-        $this->db=$this->add('DB');
+        $this->db=$this->add('DB')->connect();
         $this->add('View_Info')->set('Testing basic rendering functionality');
         parent::init();
     }

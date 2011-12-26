@@ -3,8 +3,9 @@ class page_crud extends Page {
     function init(){
         parent::init();
         //phpinfo();
-        $this->api->db=$this->api->add('DB');
+        $this->api->db=$this->api->add('DB')->connect();
         $model = $this->add('CRUD')->setModel('MyModel');
+        $model->debug();
     }
 
 }
@@ -20,7 +21,7 @@ class Model_Client extends Model_Table {
     }
 }
 class Model_MyModel extends Model_Table {
-    public $entity_code='user';
+    public $table='user';
     function init(){
         parent::init();
 

@@ -81,7 +81,7 @@ class page_dbparam extends Page_Tester {
     );
 
     function init(){
-        $this->db=$this->add('DB');
+        $this->db=$this->add('DB')->connect();
         $this->add('View_Info')->set('Subqueries parametric arguments must not clash with the main query. To avoid
                 $dsql->dsql() should be used or unique paramBase()');
         parent::init();

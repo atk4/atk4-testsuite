@@ -176,6 +176,7 @@ class page_dbwhere extends Page_Tester {
     );
     function init(){
         $this->db=$this->add('DB');
+        $this->db->connect();
         parent::init();
     }
     function runTests(){
