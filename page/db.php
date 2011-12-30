@@ -3,22 +3,87 @@
 class page_db extends Page_DBTest {
     public $db;
 
-    public $proper_responses=array(
-        "Test_create"=>'',
-        "Test_raw_insert"=>'',
-        "Test_raw_getOne"=>'John',
-        "Test_raw_select"=>'John, Peter, Ian, Steve, Robert, Lucas, Jane, Dot',
-        "Test_simple"=>'select  `foo` from `bar`      ',
-        "Test_simple_tostring"=>'select  `foo` from `bar`      ',
-        "Test_simple_dot"=>'select  `x`.`foo.bar` from `bar`      ',
-        "Test_multifields"=>'select  `a`,`b`,`c` from `bar`      ',
-        "Test_multitable"=>'select  `foo`.`a`,`foo`.`b`,`foo`.`c`,`bar`.`x`,`bar`.`y` from `bar`,`baz`      ',
-        "Test_selectall"=>'select  * from `bar`      ',
-        "Test_select_opton1"=>'select SQL_CALC_FOUND_ROWS * from `foo`      ',
-        "Test_select_calc_rows"=>'select SQL_CALC_FOUND_ROWS * from `foo`      limit :a, :a_2',
-        "Test_select_calc_rows2"=>'8',
-        "Test_select_calc_rows3"=>'8',
-        "Test_row"=>'Array
+        public $proper_responses=array(
+        "Test_raw_insert"=>array (
+  0 => '',
+  1 => 
+  array (
+  ),
+),
+        "Test_raw_getOne"=>array (
+  0 => 'John',
+  1 => 
+  array (
+  ),
+),
+        "Test_raw_select"=>array (
+  0 => 'John, Peter, Ian, Steve, Robert, Lucas, Jane, Dot',
+  1 => 
+  array (
+  ),
+),
+        "Test_simple"=>array (
+  0 => 'select  `foo` from `bar`      ',
+  1 => 
+  array (
+  ),
+),
+        "Test_simple_tostring"=>array (
+  0 => 'select  `foo` from `bar`      ',
+  1 => 
+  array (
+  ),
+),
+        "Test_simple_dot"=>array (
+  0 => 'select  `x`.`foo.bar` from `bar`      ',
+  1 => 
+  array (
+  ),
+),
+        "Test_multifields"=>array (
+  0 => 'select  `a`,`b`,`c` from `bar`      ',
+  1 => 
+  array (
+  ),
+),
+        "Test_multitable"=>array (
+  0 => 'select  `foo`.`a`,`foo`.`b`,`foo`.`c`,`bar`.`x`,`bar`.`y` from `bar`,`baz`      ',
+  1 => 
+  array (
+  ),
+),
+        "Test_selectall"=>array (
+  0 => 'select  * from `bar`      ',
+  1 => 
+  array (
+  ),
+),
+        "Test_select_opton1"=>array (
+  0 => 'select SQL_CALC_FOUND_ROWS * from `foo`      ',
+  1 => 
+  array (
+  ),
+),
+        "Test_select_calc_rows"=>array (
+  0 => 'select SQL_CALC_FOUND_ROWS * from `foo`      limit 0, 5',
+  1 => 
+  array (
+  ),
+),
+        "Test_select_calc_rows2"=>array (
+  0 => '8',
+  1 => 
+  array (
+  ),
+),
+        "Test_select_calc_rows3"=>array (
+  0 => '8',
+  1 => 
+  array (
+  ),
+),
+        "Test_row"=>array (
+  0 => 'Array
 (
     [id] => 2
     [name] => Peter
@@ -27,7 +92,13 @@ class page_db extends Page_DBTest {
     [c] => 7
 )
 ',
-        "Test_getAll"=>'Array
+  1 => 
+  array (
+    ':a' => 2,
+  ),
+),
+        "Test_getAll"=>array (
+  0 => 'Array
 (
     [0] => Array
         (
@@ -49,14 +120,58 @@ class page_db extends Page_DBTest {
 
 )
 ',
-        "Test_ts"=>'select  * from `foo`      ',
-        "Test_expr"=>'call foobar()',
-        "Test_expr2"=>'select  (select 1) `x1`,3+3 `x2`        ',
-        "Test_expr3"=>'acceptance',
-        "Test_expr4"=>'foo',
-        "Test_expr5"=>'foo..bar',
-        "Test_update"=>'update `foo` set `name`=:a where `id` = :a_2',
-        "Test_update2"=>'Array
+  1 => 
+  array (
+    ':a' => 1,
+    ':a_2' => 2,
+  ),
+),
+        "Test_ts"=>array (
+  0 => 'select  * from `foo`      ',
+  1 => 
+  array (
+  ),
+),
+        "Test_expr"=>array (
+  0 => 'call foobar()',
+  1 => 
+  array (
+  ),
+),
+        "Test_expr2"=>array (
+  0 => 'select  (select 1) `x1`,3+3 `x2`        ',
+  1 => 
+  array (
+  ),
+),
+        "Test_expr3"=>array (
+  0 => 'client',
+  1 => 
+  array (
+  ),
+),
+        "Test_expr4"=>array (
+  0 => 'foo',
+  1 => 
+  array (
+  ),
+),
+        "Test_expr5"=>array (
+  0 => 'foo..bar',
+  1 => 
+  array (
+  ),
+),
+        "Test_update"=>array (
+  0 => 'update `foo` set `name`=:a where `id` = :a_2',
+  1 => 
+  array (
+    ':a' => 'Silvia',
+    ':a_2' => '1',
+  ),
+),
+        "Test_update2"=>array (
+  0 => 'Array
 (
     [0] => Array
         (
@@ -77,7 +192,13 @@ class page_db extends Page_DBTest {
         )
 
 )
-'
+',
+  1 => 
+  array (
+    ':a' => 1,
+    ':a_2' => 2,
+  ),
+)
     );
     function test_raw_insert($t){
         $this->db->query('insert into foo (name,a,b,c) values ("John", 1,2,3)');
