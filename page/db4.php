@@ -1,8 +1,8 @@
 <?php
 
-class page_db4 extends Page_Tester {
+class page_db4 extends Page_DBTest {
     public $db;
-    public $proper_responses=array(
+        public $proper_responses=array(
         "Test_combi"=>array (
   0 => 'select  * from `book`  where `id` = :a     => update `book` set `name`=:a where `id` = :a_2',
   1 => 
@@ -75,32 +75,19 @@ class page_db4 extends Page_Tester {
   ),
 ),
         "Test_limit"=>array (
-  0 => 'select  * from `user`      limit :a, :a_2',
+  0 => 'select  * from `user`      limit 0, 5',
   1 => 
   array (
-    ':a' => 0,
-    ':a_2' => 0,
+  ),
+),
+        "Test_insert"=>array (
+  0 => 'insert  into `user` (`foo`) values (:a)',
+  1 => 
+  array (
+    ':a' => 123,
   ),
 )
     );
-    function init(){
-        $this->db=$this->add('DB')->connect();
-        $this->add('View_Info')->set('Testing basic rendering functionality');
-        parent::init();
-    }
-    function runTests(){
-        $this->grid->addColumn('text','Test_para');
-        return parent::runTests();
-    }
-    function prepare(){
-        return array($this->db->dsql());
-    }
-    function formatResult(&$row,$key,$result){
-        //parent::formatResult($row,$key,$result);
-        $x=parent::formatResult($row,$key,$result);
-        $row[$key.'_para']=var_export($this->input[0]->params,true);
-        return array($x,$this->input[0]->params);
-    }
     function test_combi($t){
         $t->table('book')->where('id',1)->set('name','Foo');
         return $t->select().' => '.$t->update();

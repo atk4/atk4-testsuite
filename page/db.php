@@ -1,6 +1,6 @@
 <?php
 
-class page_db extends Page_Tester {
+class page_db extends Page_DBTest {
     public $db;
 
     public $proper_responses=array(
@@ -79,25 +79,15 @@ class page_db extends Page_Tester {
 )
 '
     );
-    function init(){
-        $this->db=$this->add('DB');
-        parent::init();
-    }
-    function runTests(){
-        $this->grid->addColumn('text','Test_para');
-        return parent::runTests();
-    }
-    function prepare(){
-        return array($this->db->dsql());
-    }
-    function test_create($t){
-        $this->db->query('drop temporary table if exists foo');
-        $this->db->query('create temporary table if not exists foo (id int not null primary key auto_increment, name varchar(255), a int, b
-                    int, c int)');
-    }
     function test_raw_insert($t){
-        $this->db->query('insert into foo (name,a,b,c) values ("John", 1,2,3),("Peter", 2,4,7),("Ian", 2,4,7),'.
-                '("Steve", 2,4,7),("Robert", 2,4,7),("Lucas", 2,4,7),("Jane", 2,4,7),("Dot", 2,4,7)');
+        $this->db->query('insert into foo (name,a,b,c) values ("John", 1,2,3)');
+        $this->db->query('insert into foo (name,a,b,c) values ("Peter", 2,4,7)');
+        $this->db->query('insert into foo (name,a,b,c) values ("Ian", 2,4,7)');
+        $this->db->query('insert into foo (name,a,b,c) values ("Steve", 2,4,7)');
+        $this->db->query('insert into foo (name,a,b,c) values ("Robert", 2,4,7)');
+        $this->db->query('insert into foo (name,a,b,c) values ("Lucas", 2,4,7)');
+        $this->db->query('insert into foo (name,a,b,c) values ("Jane", 2,4,7)');
+        $this->db->query('insert into foo (name,a,b,c) values ("Dot", 2,4,7)');
     }
     function test_raw_getOne($t){
         return $this->db->getOne('select name from foo');
@@ -110,7 +100,6 @@ class page_db extends Page_Tester {
         }
         return implode(', ',$data);
     }
-
     function test_simple($t){
         return $t->table('bar')->field('foo')->select();
     }

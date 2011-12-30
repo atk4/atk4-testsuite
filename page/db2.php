@@ -1,8 +1,8 @@
 <?php
 
-class page_db2 extends Page_Tester {
+class page_db2 extends Page_DBTest {
     public $db;
-        public $proper_responses=array(
+    public $proper_responses=array(
         "Test_create"=>array (
   0 => '',
   1 => 
@@ -142,32 +142,15 @@ class page_db2 extends Page_Tester {
   ),
 )
     );
-    function init(){
-        $this->db=$this->add('DB');
-        $this->add('View_Info')->set('Testing setting and getting parameters for DSQL table');
-        parent::init();
-    }
-    function runTests(){
-//        $this->grid->addColumn('text','Test_para');
-        return parent::runTests();
-    }
-    function prepare(){
-        return array($this->db->dsql());
-    }
-    function formatResult(&$row,$key,$result){
-        //parent::formatResult($row,$key,$result);
-        $x=parent::formatResult($row,$key,$result);
-        if($this->input[0]->params)$row[$key.'_para']=print_r($this->input[0]->params,true);
-        return array($x,$this->input[0]->params);
-    }
-    function test_create($t){
-        $this->db->query('drop temporary table if exists foo');
-        $this->db->query('create temporary table if not exists foo (id int not null primary key auto_increment, name varchar(255), a int, b
-                    int, c int)');
-    }
     function test_raw_insert($t){
-        $this->db->query('insert into foo (name,a,b,c) values ("John", 1,2,3),("Peter", 2,4,7),("Ian", 2,4,7),'.
-                '("Steve", 2,4,7),("Robert", 2,4,7),("Lucas", 2,4,7),("Jane", 2,4,7),("Dot", 2,4,7)');
+        $this->db->query('insert into foo (name,a,b,c) values ("John", 1,2,3)');
+        $this->db->query('insert into foo (name,a,b,c) values ("Peter", 2,4,7)');
+        $this->db->query('insert into foo (name,a,b,c) values ("Ian", 2,4,7)');
+        $this->db->query('insert into foo (name,a,b,c) values ("Steve", 2,4,7)');
+        $this->db->query('insert into foo (name,a,b,c) values ("Robert", 2,4,7)');
+        $this->db->query('insert into foo (name,a,b,c) values ("Lucas", 2,4,7)');
+        $this->db->query('insert into foo (name,a,b,c) values ("Jane", 2,4,7)');
+        $this->db->query('insert into foo (name,a,b,c) values ("Dot", 2,4,7)');
     }
     function test_raw_getOne($t){
         return $this->db->getOne('select name from foo');

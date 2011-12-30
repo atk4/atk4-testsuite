@@ -1,6 +1,6 @@
 <?php
 
-class page_db3 extends Page_Tester {
+class page_db3 extends Page_DBTest {
     public $db;
     public $proper_responses=array(
         "Test_render1"=>array (
@@ -82,20 +82,6 @@ class page_db3 extends Page_Tester {
   ),
 )
     );
-    function init(){
-        $this->db=$this->add('DB')->connect();
-        $this->add('View_Info')->set('Testing basic rendering functionality');
-        parent::init();
-    }
-    function prepare(){
-        return array($this->db->dsql());
-    }
-    function formatResult(&$row,$key,$result){
-        //parent::formatResult($row,$key,$result);
-        $x=parent::formatResult($row,$key,$result);
-        if($this->input[0]->params)$row[$key.'_para']=print_r($this->input[0]->params,true);
-        return array($x,$this->input[0]->params);
-    }
     function test_render1($t){
         return $t->template('hello world');
     }
