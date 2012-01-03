@@ -6,8 +6,19 @@ class Page_DBTest extends Page_Tester {
 
         // Driver switching logic
         $ff=$this->add('Form');
+        try{
+            $c=array_keys($this->api->getConfig('dbtests'));
+        }catch(Exception $e){
+            $this->add('View_Error')->set('Define $config["dbtests"]["somedb"]="...dsn..." in your configuration file. See config-distrib.php');
+
+            Page::init();
+            return;
+        }
+
+        $c=array_combine($c,$c);
+
         $ff->addField('dropdown','dbc','DB Connection')
-            ->setValueList(array('mysql'=>'Default','sqlite'=>'SQLite'))
+            ->setValueList($c)
             ->set($this->dbconn)
             ->js('change',$ff->js()->submit());
         if($ff->isSubmitted()){
@@ -18,9 +29,10 @@ class Page_DBTest extends Page_Tester {
 
 
         try{
-            $this->db=$this->add('DB')->connect($this->dbconn);
+            $this->db=$this->add('DB')->connect('dbtests/'.$this->dbconn);
         }catch(Exception $e){
-            $this->add('View_Error')->set($e->getMessage());
+            $this->add('View_Error')->set('Connection: '.$this->dbconn.' - '.$e->getMessage());
+
             Page::init();
             return;
         }
