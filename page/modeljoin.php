@@ -9,9 +9,13 @@ class page_modeljoin extends Page_DBTest {
         $this->db->query('drop temporary table author');
         }catch(PDOException $e){}try{
         $this->db->query('drop temporary table book');
+        }catch(PDOException $e){}try{
+        $this->db->query('drop temporary table contact');
         }catch(PDOException $e){}
         $this->db->query('create temporary table author (id int not null primary key auto_increment, name varchar(255), email varchar(255))');
         $this->db->query('create temporary table book (id int not null primary key auto_increment, name varchar(255), isbn varchar(255), author_id int)');
+
+        $this->db->query('create temporary table contact (id int not null primary key auto_increment, address varchar(255), author_id int)');
 
 
         parent::init();
@@ -57,6 +61,23 @@ class page_modeljoin extends Page_DBTest {
 
         return $m->id;
     }
+    function test_j5(){
+        try {
+        $m=$this->add('Model_BookAuthorContact');
+        $m->set('name','John');
+        $m->set('email','j@mail.com');
+        $m->save();
+
+        $m->set('name','Peter');
+        $m['isbn']=123123;
+        $m['address']='IL7';
+        $m->save();
+
+        return $m->id;
+        }catch(Exception $e){
+            $this->api->caughtException($e);
+        }
+    }
 }
 
 class Model_Book extends Model_Table {
@@ -86,12 +107,8 @@ class Model_BookAuthor extends Model_Book {
     public $a;
     function init(){
         parent::init();
-
         $this->a=$this->join('author');
-
         $this->a->addField('email');
-
-
     }
 }
 
@@ -105,6 +122,15 @@ class Model_AuthorBook extends Model_Author {
         $this->b->addField('isbn');
 
 
+    }
+}
+
+class Model_BookAuthorContact extends Model_BookAuthor {
+    function init(){
+        parent::init();
+
+        $this->c=$this->a->join('contact.author_id');
+        $this->c->addField('address');
     }
 }
 
