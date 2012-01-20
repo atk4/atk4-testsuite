@@ -129,6 +129,7 @@ class Model_BookAuthorContact extends Model_BookAuthor {
     function init(){
         parent::init();
 
+        $this->debug();
         $this->c=$this->a->join('contact.author_id');
         $this->c->addField('address');
     }
