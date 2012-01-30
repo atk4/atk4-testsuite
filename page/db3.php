@@ -138,7 +138,7 @@ class page_db3 extends Page_DBTest {
     }
     function test_union($t){
         return $t
-            ->expr('UNION [q1] AND [q2]')
+            ->expr('[q1] UNION [q2]')
             ->setCustom('q1',$t->dsql()->table('book'))
             ->setCustom('q2',$t->dsql()->table('book'));
     }
