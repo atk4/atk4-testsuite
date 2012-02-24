@@ -5,7 +5,6 @@ class page_crud extends Page {
         //phpinfo();
         $this->api->db=$this->api->add('DB')->connect();
         $model = $this->add('CRUD')->setModel('MyModel');
-        $model->debug();
     }
 
 }
@@ -31,6 +30,6 @@ class Model_MyModel extends Model_Table {
             return 123;
         });
 
-        $this->addReference('client_id')->setModel('Client');
+        $this->hasOne('Client');
     }
 }

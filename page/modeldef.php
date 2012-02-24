@@ -2,6 +2,12 @@
 
 class page_modeldef extends Page_Tester {
     public $db;
+    public $proper_responses=array(
+        "Test_addfield"=>'OK',
+        "Test_settergetter"=>'int',
+        "Test_person1"=>'John',
+        "Test_person2"=>''
+    );
     function init(){
         $this->db=$this->add('DB');
         parent::init();
