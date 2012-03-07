@@ -1,6 +1,6 @@
 <?php
 
-class page_dbwhere2 extends Page_Tester {
+class page_dbwhere2 extends Page_DBTest {
     public $db;
     public $proper_responses=array(
         "Test_where_or1"=>array (
@@ -30,19 +30,6 @@ class page_dbwhere2 extends Page_Tester {
   ),
 )
     );
-    function init(){
-        $this->db=$this->add('DB');
-        parent::init();
-    }
-    function runTests(){
-        $this->grid->addColumn('text','Test_para');
-        return parent::runTests();
-    }
-    function formatResult(&$row,$key,$result){
-        //parent::formatResult($row,$key,$result);
-        $x=parent::formatResult($row,$key,array($result,$this->input[0]->params));
-        return $x;
-    }
     function prepare(){
         return array($this->db->dsql()->table('foo'));
     }
@@ -57,6 +44,9 @@ class page_dbwhere2 extends Page_Tester {
     }
     function test_where_or4($t){
         return $t->where($t->orExpr()->where('i',null)->where('o',null));
+    }
+    function test_where_or5($t){
+        return $t->SQLTemplate('update')->set('name',$t->dsql()->table('bar')->field('name')->where('id',$t->getField('id')));
     }
 }
 

@@ -1,6 +1,6 @@
 <?php
 
-class page_dbparam extends Page_Tester {
+class page_dbparam extends Page_DBTest {
     public $db;
     public $proper_responses=array(
         "Test_param"=>array (
@@ -87,19 +87,6 @@ class page_dbparam extends Page_Tester {
   ),
 )
     );
-    function init(){
-        $this->db=$this->add('DB')->connect();
-        parent::init();
-    }
-    function runTests(){
-        $this->grid->addColumn('text','Test_para');
-        return parent::runTests();
-    }
-    function formatResult(&$row,$key,$result){
-        //parent::formatResult($row,$key,$result);
-        $x=parent::formatResult($row,$key,array($result,$this->input[0]->params));
-        return $x;
-    }
     function prepare(){
         return array($this->db->dsql()->table('foo'));
     }
@@ -159,7 +146,7 @@ class page_dbparam extends Page_Tester {
     function test_param_doublewhere5($t){
         $t->where('id',3);
         $t->set('id',4);
-        return $t->update();
+        return $t->SQLTemplate('update');
     }
 }
 

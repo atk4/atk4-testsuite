@@ -128,7 +128,7 @@ class page_db4 extends Page_DBTest {
         return $t->table('user')->limit(5);
     }
     function test_insert($t){
-        return $t->table('user')->set('foo',123)->insert();
+        return $t->table('user')->set('foo',123)->SQLTemplate('insert');
     }
 
 }
