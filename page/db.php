@@ -3,9 +3,15 @@
 class page_db extends Page_DBTest {
     public $db;
 
-        public $proper_responses=array(
+    public $proper_responses=array(
         "Test_raw_insert"=>array (
   0 => '',
+  1 => 
+  array (
+  ),
+),
+        "Test_raw_params"=>array (
+  0 => '1',
   1 => 
   array (
   ),
@@ -17,7 +23,7 @@ class page_db extends Page_DBTest {
   ),
 ),
         "Test_raw_select"=>array (
-  0 => 'John, Peter, Ian, Steve, Robert, Lucas, Jane, Dot',
+  0 => 'John, Peter, Ian, Steve, Robert, Lucas, Jane, Dot, Param',
   1 => 
   array (
   ),
@@ -71,13 +77,13 @@ class page_db extends Page_DBTest {
   ),
 ),
         "Test_select_calc_rows2"=>array (
-  0 => '8',
+  0 => '9',
   1 => 
   array (
   ),
 ),
         "Test_select_calc_rows3"=>array (
-  0 => '8',
+  0 => '9',
   1 => 
   array (
   ),
@@ -126,6 +132,30 @@ class page_db extends Page_DBTest {
     ':a_2' => 2,
   ),
 ),
+        "Test_iter1"=>array (
+  0 => '1,John,1,2,3',
+  1 => 
+  array (
+    ':a' => 1,
+    ':a_2' => 2,
+  ),
+),
+        "Test_doubleget"=>array (
+  0 => '1',
+  1 => 
+  array (
+    ':a' => 1,
+    ':a_2' => 2,
+  ),
+),
+        "Test_doubleiter"=>array (
+  0 => '1',
+  1 => 
+  array (
+    ':a' => 1,
+    ':a_2' => 2,
+  ),
+),
         "Test_ts"=>array (
   0 => 'select  * from `foo`      ',
   1 => 
@@ -145,7 +175,7 @@ class page_db extends Page_DBTest {
   ),
 ),
         "Test_expr3"=>array (
-  0 => 'client',
+  0 => 'acceptance',
   1 => 
   array (
   ),
@@ -197,6 +227,22 @@ class page_db extends Page_DBTest {
   array (
     ':a' => 1,
     ':a_2' => 2,
+  ),
+),
+        "Test_update_then_select"=>array (
+  0 => 'select  * from `foo`  where `id` = :a    ',
+  1 => 
+  array (
+    ':a' => 1,
+  ),
+),
+        "Test_insert_all"=>array (
+  0 => '10,11',
+  1 => 
+  array (
+    ':a' => 'O\'Brien X',
+    ':a_2' => 2,
+    ':a_3' => 9,
   ),
 )
     );
@@ -266,14 +312,27 @@ class page_db extends Page_DBTest {
         return print_r($t->table('foo')->where('id',array(1,2))->get(),true);
     }
     function test_iter1($t){
-        foreach($t->table('foo')->debug()->where('id',array(1,2)) as $row){
-            return print_r($row,true);
+        foreach($t->table('foo')->where('id',array(1,2)) as $row){
+            return join(',',$row);
         }
         return 'OPS';
     }
     function test_doubleget($t){
         $t->table('foo')->where('id',array(1,2));
         return $t->get()==$t->get();
+    }
+    function test_doubleiter($t){
+        switch(1) {
+        case 1:
+            foreach($t->table('foo')->where('id',array(1,2)) as $row){
+                $r=join(',',$row);
+                break;
+            }
+        }
+        foreach($t as $row){
+            return $r==join(',',$row);
+        }
+        return "OPS";
     }
     function test_ts($t){
         return $t->table('foo');
