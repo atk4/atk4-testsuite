@@ -1,5 +1,9 @@
 <?php
 
+/*
+ More info: https://groups.google.com/forum/#!topic/agile-toolkit-devel/sE3dkCMPznk
+ */
+
 class Model_Demo extends Model_Table {
   public $table='demo';
   function init() {
@@ -9,6 +13,14 @@ class Model_Demo extends Model_Table {
 }
 
 class page_nullpush extends Page_DBTest {
+    public $proper_responses=array(
+        "Test_simple"=>array (
+  0 => '1',
+  1 => 
+  array (
+  ),
+)
+    );
     function tableInit(){
         if($this->db->type=='mysql'){
             $this->db->query('drop temporary table if exists demo');
@@ -26,6 +38,8 @@ class page_nullpush extends Page_DBTest {
         $demo=$this->add('Model_Demo');
         $demo->tryLoadAny();
         $demo->save();
+
+        return $demo->id;
     }
 }
 
