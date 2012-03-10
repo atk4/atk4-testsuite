@@ -38,6 +38,14 @@ class Page_DBTest extends Page_Tester {
         }
 
 
+        $this->tableInit();
+
+
+
+
+        parent::init();
+    }
+    function tableInit(){
         if($this->db->type=='mysql'){
             $this->db->query('drop temporary table if exists foo');
             $this->db->query('create temporary table if not exists foo (id int not null primary key auto_increment, name varchar(255), a int, b
@@ -51,11 +59,6 @@ class Page_DBTest extends Page_Tester {
 
 
 
-
-
-
-
-        parent::init();
     }
     function runTests(){
         $this->grid->addColumn('text','Test_para');
