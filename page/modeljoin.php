@@ -2,20 +2,58 @@
 
 class page_modeljoin extends Page_DBTest {
     public $db;
+    public $proper_responses=array(
+        "Test_j1"=>array (
+  0 => 'select  *,`book`.`id` from `book` inner join `author` as `_a` on `_a`.`id` = `book`.`author_id`     ',
+  1 => 
+  array (
+  ),
+),
+        "Test_j2"=>array (
+  0 => 'select  *,`book`.`id` from `book` inner join `author` as `_a` on `_a`.`id` = `book`.`author_id` inner join `book_info` as `_b` on `_b`.`id` = `book`.`book_info_id`     ',
+  1 => 
+  array (
+  ),
+),
+        "Test_j3"=>array (
+  0 => 'Peter',
+  1 => 
+  array (
+  ),
+),
+        "Test_j4"=>array (
+  0 => '2',
+  1 => 
+  array (
+  ),
+),
+        "Test_j5"=>array (
+  0 => '3',
+  1 => 
+  array (
+  ),
+),
+        "Test_ref"=>array (
+  0 => '1',
+  1 => 
+  array (
+  ),
+)
+    );
     function init(){
         $this->db=$this->add('DB');
 
         try {
-        $this->db->query('drop temporary table author');
+        $this->db->query('drop table author');
         }catch(PDOException $e){}try{
-        $this->db->query('drop temporary table book');
+        $this->db->query('drop table book');
         }catch(PDOException $e){}try{
-        $this->db->query('drop temporary table contact');
+        $this->db->query('drop table contact');
         }catch(PDOException $e){}
-        $this->db->query('create temporary table author (id int not null primary key auto_increment, name varchar(255), email varchar(255))');
-        $this->db->query('create temporary table book (id int not null primary key auto_increment, name varchar(255), isbn varchar(255), author_id int)');
+        $this->db->query('create table author (id int not null primary key auto_increment, name varchar(255), email varchar(255))');
+        $this->db->query('create table book (id int not null primary key auto_increment, name varchar(255), isbn varchar(255), author_id int)');
 
-        $this->db->query('create temporary table contact (id int not null primary key auto_increment, address varchar(255), author_id int)');
+        $this->db->query('create table contact (id int not null primary key auto_increment, address varchar(255), author_id int)');
 
 
         parent::init();
@@ -23,10 +61,6 @@ class page_modeljoin extends Page_DBTest {
     function prepare(){
         $this->mb=$this->add('Model_BookAuthor');
         return array($this->mb->_dsql());
-    }
-    function test_ref($q){
-        $m1=$this->add('Model_Book');
-        return $m1->ref('Author');
     }
     function test_j1(){
         $m=$this->add('Model_BookAuthor');
@@ -62,7 +96,6 @@ class page_modeljoin extends Page_DBTest {
         return $m->dsql();
     }
     function test_j5(){
-        try {
         $m=$this->add('Model_BookAuthorContact');
         $m->set('name','John');
         $m->set('email','j@mail.com');
@@ -74,8 +107,13 @@ class page_modeljoin extends Page_DBTest {
         $m->save();
 
         return $m->dsql();
+    }
+    function test_ref($q){
+        try{
+        $m1=$this->add('Model_Author')->loadBy('email','j@mail.com');
+        return count($m1->ref('Book'));
         }catch(Exception $e){
-            $this->api->caughtException($e);
+            $this->api->caughtException( $e);
         }
     }
 }
@@ -101,7 +139,7 @@ class Model_Author extends Model_Table {
         $this->addField('name');
         $this->addField('email');
 
-        //$this->hasMany('Book');
+        $this->hasMany('Book');
     }
 }
 

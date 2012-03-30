@@ -1,8 +1,8 @@
 <?php
 
-class page_dbparam extends Page_Tester {
+class page_dbparam extends Page_DBTest {
     public $db;
-        public $proper_responses=array(
+    public $proper_responses=array(
         "Test_param"=>array (
   0 => 'select  * from `foo`  where `id` = :a    ',
   1 => 
@@ -78,23 +78,15 @@ class page_dbparam extends Page_Tester {
     ':a' => 3,
   ),
 ),
+        "Test_param_doublewhere5"=>array (
+  0 => 'update `foo` set `id`=:a where `id` = :a_2',
+  1 => 
+  array (
+    ':a' => 4,
+    ':a_2' => 3,
+  ),
+)
     );
-
-    function init(){
-        $this->db=$this->add('DB')->connect();
-        $this->add('View_Info')->set('Subqueries parametric arguments must not clash with the main query. To avoid
-                $dsql->dsql() should be used or unique paramBase()');
-        parent::init();
-    }
-    function runTests(){
-        $this->grid->addColumn('text','Test_para');
-        return parent::runTests();
-    }
-    function formatResult(&$row,$key,$result){
-        //parent::formatResult($row,$key,$result);
-        $x=parent::formatResult($row,$key,array($result,$this->input[0]->params));
-        return $x;
-    }
     function prepare(){
         return array($this->db->dsql()->table('foo'));
     }
@@ -154,7 +146,7 @@ class page_dbparam extends Page_Tester {
     function test_param_doublewhere5($t){
         $t->where('id',3);
         $t->set('id',4);
-        return $t->update();
+        return $t->SQLTemplate('update');
     }
 }
 

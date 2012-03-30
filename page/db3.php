@@ -2,7 +2,7 @@
 
 class page_db3 extends Page_DBTest {
     public $db;
-    public $proper_responses=array(
+        public $proper_responses=array(
         "Test_render1"=>array (
   0 => 'hello world',
   1 => 
@@ -70,13 +70,19 @@ class page_db3 extends Page_DBTest {
   ),
 ),
         "Test_field6"=>array (
-  0 => 'Exception: Specified expression without alias',
+  0 => 'select len(name)',
   1 => 
   array (
   ),
 ),
         "Test_field_subquery1"=>array (
   0 => 'select  (select  sum(pages) `pages` from `book`  where `author_id` = `author`.`id`    ) `total_pages` from `author`      ',
+  1 => 
+  array (
+  ),
+),
+        "Test_union"=>array (
+  0 => 'select  * from `book`       UNION select  * from `book`      ',
   1 => 
   array (
   ),

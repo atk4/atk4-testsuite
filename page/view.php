@@ -6,6 +6,15 @@ class MyInvisible extends AbstractView {
 }
 
 class page_view extends Page_Tester {
+    public $proper_responses=array(
+        "Test_empty"=>'<p>Hello world</p>',
+        "Test_frame"=>'
+<div id="sample_project_view_myinvisible_test_frame_frame" class="rounded atk-box white ">
+  <h2>FrameTitle</h2>
+  <p>Hello world</p>
+</div>
+'
+    );
     function init(){
         $this->i=$this->add('MyInvisible');
         parent::init();
@@ -16,14 +25,14 @@ class page_view extends Page_Tester {
     }
     function test_empty($t){
         $x=$t->add('HelloWorld');
-        return $x;
+        return $x->getHTML();
     }
     function test_frame($t){
         $this->api->add('Controller_Compat','compat');
 
-        $x=$t->frame('FrameTitle');
+        $x=$t->add('Frame')->setTitle('FrameTitle');
         $x->add('HelloWorld');
-        return $x;
+        return $x->getHTML();
     }
 
 }

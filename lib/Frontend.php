@@ -65,7 +65,7 @@ class Frontend extends ApiFrontend {
             $n=str_replace('.php','',$n);
             $n='<a href="'.$l->api->url($n).'">'.$n.'</a>';
 
-            $l->current_row['name']=$n;
+            $l->current_row_html['name']=$n;
         });
     }
 }

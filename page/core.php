@@ -8,6 +8,9 @@ class MyController extends AbstractObject {
 }
 class Exception_Logic_Ouch extends Exception_Logic {
 }
+class TrackedObject extends AbstractObject {
+    public $auto_track_element=true;
+}
 
 class page_core extends Page_Tester {
     public $proper_responses=array(
@@ -15,8 +18,8 @@ class page_core extends Page_Tester {
         "Test_clone"=>'1',
         "Test_destroy"=>'1',
         "Test_getElement"=>'1',
+        "Test_getElement1"=>'TrackedObject',
         "Test_getElement2"=>'1',
-        "Test_hasElement"=>'1',
         "Test_hasElement2"=>'1',
         "Test_add"=>'1',
         "Test_add2_controller"=>'',
@@ -32,7 +35,6 @@ class page_core extends Page_Tester {
         "Test_addMethod"=>'',
         "Test_addGlobalMethod"=>'1'
     );
-
     function prepare(){
         return array($this->add('MyObject'));
     }
@@ -50,7 +52,11 @@ class page_core extends Page_Tester {
         return $s==$s2;
     }
     function test_getElement($t){
-        return $t->owner->getElement($t->short_name)->x;
+        return !is_object($t->owner->getElement($t->short_name));
+    }
+    function test_getElement1($t){
+        $t=$this->add('TrackedObject');
+        return get_class($t->owner->getElement($t->short_name));
     }
     function test_getElement2($t){
         try{
@@ -60,19 +66,17 @@ class page_core extends Page_Tester {
             return true;
         }
     }
-    function test_hasElement($t){
+    function test_hasElement2($t){
         return !$t->owner->hasElement('no such element');
     }
-    function test_hasElement2($t){
-        return $t->owner->hasElement($t->short_name)->x;
-    }
     function test_add($t){
-        $o1=$t->add('MyObject');
-        $o2=$t->add('MyObject');
+        $o1=$t->add('MyObject','c1');
+        $o2=$t->add('MyObject','c1');
         $o1->x++;
         return $o1->x != $o2->x;
     }
     function test_add2_controller($t){
+        // same controller added twice uses same value
         $o1=$t->add('MyController','c1');
         $o2=$t->add('MyController','c1');
         $o1->x++;
