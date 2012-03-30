@@ -22,7 +22,7 @@ class page_modeljoin extends Page_DBTest {
     }
     function prepare(){
         $this->mb=$this->add('Model_BookAuthor');
-        return array($this->mb->dsql);
+        return array($this->mb->_dsql());
     }
     function test_ref($q){
         $m1=$this->add('Model_Book');
@@ -59,7 +59,7 @@ class page_modeljoin extends Page_DBTest {
         $m['isbn']=123123;
         $m->save();
 
-        return $m->id;
+        return $m->dsql();
     }
     function test_j5(){
         try {
@@ -73,7 +73,7 @@ class page_modeljoin extends Page_DBTest {
         $m['address']='IL7';
         $m->save();
 
-        return $m->id;
+        return $m->dsql();
         }catch(Exception $e){
             $this->api->caughtException($e);
         }
@@ -82,6 +82,7 @@ class page_modeljoin extends Page_DBTest {
 
 class Model_Book extends Model_Table {
     public $table='book';
+    public $table_alias='b';
     function init(){
         parent::init();
 
@@ -93,6 +94,7 @@ class Model_Book extends Model_Table {
 }
 class Model_Author extends Model_Table {
     public $table='author';
+    public $table_alias='a';
     function init(){
         parent::init();
 
@@ -117,7 +119,7 @@ class Model_AuthorBook extends Model_Author {
     function init(){
         parent::init();
 
-        $this->b=$this->join('book.author_id');
+        $this->b=$this->join('book.author_id',null,'inner','bbx');
 
         $this->b->addField('isbn');
 
@@ -129,7 +131,6 @@ class Model_BookAuthorContact extends Model_BookAuthor {
     function init(){
         parent::init();
 
-        $this->debug();
         $this->c=$this->a->join('contact.author_id');
         $this->c->addField('address');
     }

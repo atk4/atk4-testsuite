@@ -101,6 +101,12 @@ class page_db4 extends Page_DBTest {
     function test_join3($t){
         return $t->table('user')->join('address.user_id');
     }
+    function test_join3a($t){
+        return $t->table('user','u1')->join('address.user_id',null,null,'bleh');
+    }
+    function test_join3b($t){
+        return $t->table('user','u1')->join(array('bleh'=>'address.user_id'));
+    }
     function test_join4($t){
         return $t->table('user')->join('address.code','code','inner');
     }
