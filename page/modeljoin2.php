@@ -24,6 +24,11 @@ class page_modeljoin2 extends Page_DBTest {
         //$this->mb=$this->add('Model_BookAuthor');
         //return array($this->mb->_dsql());
     }
+    function test_parentjoin(){
+        $m=$this->add('Model_Category');
+        $m->hasOne('Category','parent_id');     // alliases must be unique.
+
+    }
     function test_j4(){
         $m=$this->add('Model_AuthorBook');
         $m->set('name','John');
