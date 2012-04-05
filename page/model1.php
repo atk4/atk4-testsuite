@@ -1,217 +1,161 @@
 <?php
 
-class page_model1 extends Page_DBTest {
-    public $proper_responses=array(
-        "Test_combi"=>array (
-  0 => 
-  array (
-    0 => 'select  * from `book`  where `id` = :a     => update `book` set `name`=:a where `id` = :a_2',
-    1 => 
-    array (
-      ':a' => 'Foo',
-      ':a_2' => 1,
-    ),
-  ),
-  1 => 
-  array (
-    ':a' => 'Foo',
-    ':a_2' => 1,
-  ),
-),
-        "Test_join1"=>array (
-  0 => 
-  array (
-    0 => 'select  * from `user`      ',
-    1 => 
-    array (
-    ),
-  ),
+class page_model1 extends Page_Tester {
+    public $db;
+        public $proper_responses=array(
+        "Test_j1"=>array (
+  0 => 'select  *,`book`.`id` from `book` inner join `author` as `_a` on `_a`.`id` = `book`.`author_id`     ',
   1 => 
   array (
   ),
 ),
-        "Test_join2"=>array (
-  0 => 
-  array (
-    0 => 'select  * from `user` left join `address` on `address`.`id` = `user`.`address_id`     ',
-    1 => 
-    array (
-    ),
-  ),
+        "Test_j2"=>array (
+  0 => 'select  *,`book`.`id` from `book` inner join `author` as `_a` on `_a`.`id` = `book`.`author_id` inner join `book_info` as `_b` on `_b`.`id` = `book`.`book_info_id`     ',
   1 => 
   array (
   ),
 ),
-        "Test_join3"=>array (
-  0 => 
-  array (
-    0 => 'select  * from `user` left join `address` on `address`.`user_id` = `user`.`id`     ',
-    1 => 
-    array (
-    ),
-  ),
+        "Test_j3"=>array (
+  0 => 'Peter',
   1 => 
   array (
   ),
 ),
-        "Test_join4"=>array (
-  0 => 
-  array (
-    0 => 'select  * from `user` inner join `address` on `address`.`code` = `user`.`code`     ',
-    1 => 
-    array (
-    ),
-  ),
+        "Test_j4"=>array (
+  0 => 'select  `a`.`id`,`a`.`name`,`a`.`email`,`bbx`.`isbn`,`bbx`.`author_id` `bbx`,`bbx`.`author_id` `bbx` from `author` `a` inner join `book` as `bbx` on `bbx`.`author_id` = `a`.`id`     limit 0, 1',
   1 => 
   array (
   ),
 ),
-        "Test_join5"=>array (
-  0 => 
-  array (
-    0 => 'select  * from `user` left join `address` on `address`.`id` = `user`.`address_id` left join `portfolio` on `portfolio`.`id` = `user`.`portfolio_id`     ',
-    1 => 
-    array (
-    ),
-  ),
+        "Test_j5"=>array (
+  0 => 'select  `book`.`id`,`book`.`name`,`book`.`isbn`,`book`.`author_id`,(select  `a`.`name` from `author` `a`  where `book`.`author_id` = `a`.`id`    ) `author`,`_a`.`email`,`_c`.`address`,`book`.`author_id` `_a`,`_c`.`author_id` `_c`,`book`.`author_id` `_a`,`_c`.`author_id` `_c` from `book` inner join `author` as `_a` on `_a`.`id` = `book`.`author_id` inner join `contact` as `_c` on `_c`.`author_id` = `_a`.`id`     limit 0, 1',
   1 => 
   array (
   ),
 ),
-        "Test_join6"=>array (
-  0 => 
-  array (
-    0 => 'select  * from `user` left join `address` as `a` on `a`.`id` = `user`.`address_id` left join `portfolio` as `p` on `p`.`id` = `user`.`portfolio_id`     ',
-    1 => 
-    array (
-    ),
-  ),
-  1 => 
-  array (
-  ),
-),
-        "Test_call"=>array (
-  0 => 
-  array (
-    0 => 'call myfunc(:a, :a_2, :a_3)',
-    1 => 
-    array (
-      ':a' => '1',
-      ':a_2' => 'test,def',
-      ':a_3' => 'abc',
-    ),
-  ),
-  1 => 
-  array (
-    ':a' => '1',
-    ':a_2' => 'test,def',
-    ':a_3' => 'abc',
-  ),
-),
-        "Test_group"=>array (
-  0 => 
-  array (
-    0 => 'select  `name`,count(*) from `user`   group by `name`, `surname`   ',
-    1 => 
-    array (
-    ),
-  ),
-  1 => 
-  array (
-  ),
-),
-        "Test_order"=>array (
-  0 => 
-  array (
-    0 => 'select  * from `user`     order by `name`, `surname` ',
-    1 => 
-    array (
-    ),
-  ),
-  1 => 
-  array (
-  ),
-),
-        "Test_order2"=>array (
-  0 => 
-  array (
-    0 => 'select  * from `user`     order by `name`, `surname` ',
-    1 => 
-    array (
-    ),
-  ),
-  1 => 
-  array (
-  ),
-),
-        "Test_limit"=>array (
-  0 => 
-  array (
-    0 => 'select  * from `user`      limit 0, 5',
-    1 => 
-    array (
-    ),
-  ),
+        "Test_ref"=>array (
+  0 => '1',
   1 => 
   array (
   ),
 )
     );
     function init(){
-        $this->add('View_Info')->set('Basic model functionality');
+        $this->db=$this->add('DB');
+
+        try {
+        $this->db->query('drop table author');
+        }catch(PDOException $e){}try{
+        $this->db->query('drop table book');
+        }catch(PDOException $e){}try{
+        $this->db->query('drop table contact');
+        }catch(PDOException $e){}
+        $this->db->query('create table author (id int not null primary key auto_increment, name varchar(255), email varchar(255),my_contact int)');
+        $this->db->query('create table book (id int not null primary key auto_increment, name varchar(255), isbn varchar(255), author_id int)');
+
+        $this->db->query('create table contact (id int not null primary key auto_increment, address varchar(255), author_id int)');
+
+
+        $this->api->pathfinder->addLocation('..',array('addons'=>'atk4-addons'));
+
         parent::init();
     }
-    function runTests(){
-        $this->grid->addColumn('text','Test_para');
-        return parent::runTests();
-    }
     function prepare(){
-        return array($this->db->dsql());
+        //return array($this->add('Model_Author'), $this->add('Model_Book'), $this->add('Model_Contact'));
     }
-    function formatResult(&$row,$key,$result){
-        //parent::formatResult($row,$key,$result);
-        $x=parent::formatResult($row,$key,$result);
-        $row[$key.'_para']=var_export($this->input[0]->params,true);
-        return array($x,$this->input[0]->params);
+    function r($ar){
+        return $ar[rand(0,count($ar))];
     }
-    function test_combi($t){
-        $t->table('book')->where('id',1)->set('name','Foo');
-        return $t->select().' => '.$t->update();
+    function test_populate(){
+        $a=$this->add('Model_Author');
+        
+        $n=array('Anne','Jane','Aileen','John','Peter','Gavin','David','Marin','Skuja');
+        $s=array('Smith','Blogs','Coder','Tester','Hacker');
+
+        for($x=0;$x<100;$x++){
+            $a['name']=$this->r($n).' '.$this->r($s);
+            $a->saveAndUnload();
+        }
+
+
+        return $a->count()->getOne();
     }
-    function test_join1($t){
-        return $t->table('user');
+    function test_populate2(){
+        $this->a=$this->add('Model_Author');
+
+        foreach($a as $junk){
+            $id=$a->ref('my_contact',false)->set('address',rand(1,1000))->save()->id;
+            $a->set('my_contact', $id)->saveAndUnload();
+        }
+
+        $c=$this->add('Model_Contact');
+
+        return $c->count()->getOne();
     }
-    function test_join2($t){
-        return $t->table('user')->join('address');
+    function test_populate2a(){
+        $a=$this->a;
+
+        foreach($a as $junk){
+            $id=$a->ref('my_contact',false)->set('address',rand(1,1000))->save()->id;
+            $a->set('my_contact', $id)->saveAndUnload();
+        }
+
+        $c=$this->add('Model_Contact');
+
+        return $c->count()->getOne();
     }
-    function test_join3($t){
-        return $t->table('user')->join('address.user_id');
-    }
-    function test_join4($t){
-        return $t->table('user')->join('address.code','code','inner');
-    }
-    function test_join5($t){
-        return $t->table('user')
-            ->join('address')
-            ->join('portfolio');
-    }
-    function test_join6($t){
-        return $t->table('user')->join(array('a'=>'address','p'=>'portfolio'));
-    }
-    function test_call($t){
-        return $t->call('myfunc',array('1','test,def','abc'));
-    }
-    function test_group($t){
-        return $t->table('user')->field('name,count(*)')->group('name,surname');
-    }
-    function test_order($t){
-        return $t->table('user')->order('name,surname');
-    }
-    function test_order2($t){
-        return $t->table('user')->order('name')->order('surname');
-    }
-    function test_limit($t){
-        return $t->table('user')->limit(5);
+    function test_populate3(){
+        return;
+        $a=$this->add('Model_Author');
+        $n=array('Anne','Jane','Aileen','John','Peter','Gavin','David','Marin','Skuja');
+        $s=array('Smith','Blogs','Coder','Tester','Hacker');
+
+        for($x=0;$x<1;$x++){
+            $a['name']=$this->r($n).' '.$this->r($s);
+            $a->saveAndUnload();
+        }
+
+
+        return $a->count()->getOne();
     }
 
+
+}
+
+class Model_Book extends Model_Table {
+    public $table='book';
+    function init(){
+        parent::init();
+
+        $this->addField('name');
+        $this->addField('isbn');
+
+        $this->hasOne('Author');
+    }
+}
+class Model_Author extends Model_Table {
+    public $table='author';
+    function init(){
+        parent::init();
+
+        $this->addField('name');
+        $this->addField('email');
+
+        $this->hasMany('Book');
+        $this->hasOne('Contact','my_contact');
+    }
+}
+class Model_Contact extends Model_Table {
+    public $table='contact';
+    function init(){
+        parent::init();
+
+        $this->addField('address');
+
+        $this->hasMany('Author','my_contact');
+        $this->addHook('afterInsert',function($m,$id){
+            $m->id=$id;
+            $m->breakHook(false);
+        });
+    }
 }

@@ -41,7 +41,7 @@ class page_db extends Page_DBTest {
   ),
 ),
         "Test_simple_dot"=>array (
-  0 => 'select  `x`.`foo.bar` from `bar`      ',
+  0 => 'select  `x`.foo.bar from `bar`      ',
   1 => 
   array (
   ),

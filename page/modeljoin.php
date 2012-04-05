@@ -2,7 +2,7 @@
 
 class page_modeljoin extends Page_DBTest {
     public $db;
-    public $proper_responses=array(
+        public $proper_responses=array(
         "Test_j1"=>array (
   0 => 'select  *,`book`.`id` from `book` inner join `author` as `_a` on `_a`.`id` = `book`.`author_id`     ',
   1 => 
@@ -22,13 +22,13 @@ class page_modeljoin extends Page_DBTest {
   ),
 ),
         "Test_j4"=>array (
-  0 => '2',
+  0 => 'select  `a`.`id`,`a`.`name`,`a`.`email`,`bbx`.`isbn`,`bbx`.`author_id` `bbx`,`bbx`.`author_id` `bbx` from `author` `a` inner join `book` as `bbx` on `bbx`.`author_id` = `a`.`id`     limit 0, 1',
   1 => 
   array (
   ),
 ),
         "Test_j5"=>array (
-  0 => '3',
+  0 => 'select  `book`.`id`,`book`.`name`,`book`.`isbn`,`book`.`author_id`,(select  `a`.`name` from `author` `a`  where `book`.`author_id` = `a`.`id`    ) `author`,`_a`.`email`,`_c`.`address`,`book`.`author_id` `_a`,`_c`.`author_id` `_c`,`book`.`author_id` `_a`,`_c`.`author_id` `_c` from `book` inner join `author` as `_a` on `_a`.`id` = `book`.`author_id` inner join `contact` as `_c` on `_c`.`author_id` = `_a`.`id`     limit 0, 1',
   1 => 
   array (
   ),
@@ -110,17 +110,18 @@ class page_modeljoin extends Page_DBTest {
     }
     function test_ref($q){
         try{
-        $m1=$this->add('Model_Author')->loadBy('email','j@mail.com');
-        return count($m1->ref('Book'));
+            $m1=$this->add('Model_Author')->loadBy('email','j@mail.com');
+            return count($m1->ref('Book'));
         }catch(Exception $e){
             $this->api->caughtException( $e);
         }
     }
+
+
 }
 
 class Model_Book extends Model_Table {
     public $table='book';
-    public $table_alias='b';
     function init(){
         parent::init();
 
