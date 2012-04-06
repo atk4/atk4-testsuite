@@ -81,19 +81,7 @@ class page_model1 extends Page_Tester {
         return $a->count()->getOne();
     }
     function test_populate2(){
-        $this->a=$this->add('Model_Author');
-
-        foreach($a as $junk){
-            $id=$a->ref('my_contact',false)->set('address',rand(1,1000))->save()->id;
-            $a->set('my_contact', $id)->saveAndUnload();
-        }
-
-        $c=$this->add('Model_Contact');
-
-        return $c->count()->getOne();
-    }
-    function test_populate2a(){
-        $a=$this->a;
+        $a=$this->a=$this->add('Model_Author');
 
         foreach($a as $junk){
             $id=$a->ref('my_contact',false)->set('address',rand(1,1000))->save()->id;
@@ -105,6 +93,21 @@ class page_model1 extends Page_Tester {
         return $c->count()->getOne();
     }
     function test_populate3(){
+
+        $a=clone $this->a;
+        $a->loadBy('my_contact',30);
+        $a['email']='test@example.org';
+        $a->save();
+
+        $a->loadBy('my_contact',33);
+        $a['email']='test@example.org';
+        $a->save();
+
+        $a=clone $this->a;
+        $a->addCondition('email','test@example.org');
+        return $a->count()->getOne();
+
+
         return;
         $a=$this->add('Model_Author');
         $n=array('Anne','Jane','Aileen','John','Peter','Gavin','David','Marin','Skuja');
@@ -153,9 +156,12 @@ class Model_Contact extends Model_Table {
         $this->addField('address');
 
         $this->hasMany('Author','my_contact');
+        /*
+         * offers a minor speedup
         $this->addHook('afterInsert',function($m,$id){
             $m->id=$id;
             $m->breakHook(false);
         });
+         */
     }
 }
