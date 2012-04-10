@@ -2,6 +2,7 @@
 class page_tmail extends Page_Tester {
     function init(){
         parent::init();
+        $this->api->getConfig('foo');
     }
     function prepare(){
         return array($this->add('TMail'));
