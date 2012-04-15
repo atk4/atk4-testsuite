@@ -21,6 +21,7 @@ class Model_Examples extends Model {
         $this->addField('name');
 
         $p=$this->api->pathfinder->searchDir('page');
+        sort($p);
         $this->setSource('ArrayAssoc',$p);
         return $this;
     }
@@ -36,6 +37,8 @@ class Frontend extends ApiFrontend {
 						)
 					))
 			->setParent($this->pathfinder->base_location);
+        $this->api->pathfinder->addLocation('..',array('addons'=>'atk4-addons'));
+        $this->add('russian/Controller_Translation');
 		$this->add('jUI');
 		$this->js()
 			->_load('atk4_univ')
