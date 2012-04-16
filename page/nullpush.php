@@ -23,8 +23,8 @@ class page_nullpush extends Page_DBTest {
     );
     function tableInit(){
         if($this->db->type=='mysql'){
-            $this->db->query('drop temporary table if exists demo');
-            $this->db->query("create temporary table `demo` (
+            $this->db->query('drop table if exists demo');
+            $this->db->query("create table `demo` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `sometext` varchar(250) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)

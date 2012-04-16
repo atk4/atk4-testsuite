@@ -26,7 +26,7 @@ class Model_MyModel extends Model_Table {
 
         $this->addField('name')->defaultValue('John');
 
-        $this->addExpression('age')->calculated(function(){
+        $this->addExpression('age')->set(function(){
             return 123;
         });
 
