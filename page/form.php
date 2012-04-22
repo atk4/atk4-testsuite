@@ -8,9 +8,12 @@ class Model_X extends Model_Table {
     }
 }
 
-class page_form extends Page {
+class page_form extends Page_UITest {
     function init(){
         parent::init();
+
+    }
+    function test_buttonclicks(){
         $f=$this->add('Form');
         $a=$f->addSubmit('John Doe');
         $b=$f->addSubmit('b');
@@ -24,8 +27,16 @@ class page_form extends Page {
                 $this->add('View_Info')->set('b clicked');
             }
         }
-
+    }
+    function test_setmodel(){
         $this->add('MVCForm')->setModel('X');
+    }
+    function test_autocomplete(){
+        $cc=$this->add('Columns');
+        $cc->addColumn(6)->add('Form')->setModel('Book');
+        $m=$this->add('Model_Book');
+        $m->getField('author_id')->display('utocomplete');
+        $cc->addColumn(6)->add('Form')->setModel($m);
     }
 
 }
