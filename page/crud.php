@@ -4,7 +4,11 @@ class page_crud extends Page {
         parent::init();
         //phpinfo();
         $this->api->db=$this->api->add('DB')->connect();
-        $model = $this->add('CRUD')->setModel('MyModel');
+        $crud = $this->add('CRUD');
+        $model=$crud->setModel('MyModel');
+        if($crud->grid){
+            $crud->grid->getColumn('name')->makeSortable();
+        }
     }
 
 }
@@ -30,6 +34,6 @@ class Model_MyModel extends Model_Table {
             return 123;
         });
 
-        $this->hasOne('Client');
+        $this->hasOne('Client')->sortable(true);
     }
 }
