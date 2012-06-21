@@ -32,7 +32,7 @@ class page_core extends Page_Tester {
         "Test_hook1"=>'',
         "Test_hook2"=>'1',
         "Test_hook3"=>'1',
-        "Test_addMethod"=>'',
+        "Test_addMethod"=>'1',
         "Test_addGlobalMethod"=>'1'
     );
     function prepare(){

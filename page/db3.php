@@ -2,7 +2,7 @@
 
 class page_db3 extends Page_DBTest {
     public $db;
-        public $proper_responses=array(
+    public $proper_responses=array(
         "Test_render1"=>array (
   0 => 'hello world',
   1 => 
@@ -82,7 +82,7 @@ class page_db3 extends Page_DBTest {
   ),
 ),
         "Test_union"=>array (
-  0 => 'select  * from `book`       UNION select  * from `book`      ',
+  0 => '(select  * from `book`      ) UNION (select  * from `book`      )',
   1 => 
   array (
   ),

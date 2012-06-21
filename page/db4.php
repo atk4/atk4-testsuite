@@ -2,7 +2,7 @@
 
 class page_db4 extends Page_DBTest {
     public $db;
-        public $proper_responses=array(
+       public $proper_responses=array(
         "Test_combi"=>array (
   0 => 'select  * from `book`  where `id` = :a     => update `book` set `name`=:a where `id` = :a_2',
   1 => 
@@ -25,6 +25,18 @@ class page_db4 extends Page_DBTest {
 ),
         "Test_join3"=>array (
   0 => 'select  * from `user` left join `address` on `address`.`user_id` = `user`.`id`     ',
+  1 => 
+  array (
+  ),
+),
+        "Test_join3a"=>array (
+  0 => 'select  * from `user` `u1` left join `address` as `bleh` on `bleh`.`user_id` = `u1`.`id`     ',
+  1 => 
+  array (
+  ),
+),
+        "Test_join3b"=>array (
+  0 => 'select  * from `user` `u1` left join `address` as `bleh` on `bleh`.`user_id` = `u1`.`id`     ',
   1 => 
   array (
   ),
@@ -87,7 +99,7 @@ class page_db4 extends Page_DBTest {
     ':a' => 123,
   ),
 )
-    );
+    ); 
     function test_combi($t){
         $t->table('book')->where('id',1)->set('name','Foo');
         return $t->SQLTemplate('select').' => '.$t->SQLTemplate('update');

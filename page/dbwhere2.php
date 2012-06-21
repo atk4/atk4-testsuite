@@ -28,8 +28,14 @@ class page_dbwhere2 extends Page_DBTest {
     ':a' => NULL,
     ':a_2' => NULL,
   ),
+),
+        "Test_where_or5"=>array (
+  0 => 'update `foo` set `name`=(select  `name` from `bar`  where `id` = `foo`.`id`    ) ',
+  1 => 
+  array (
+  ),
 )
-    );
+    );    
     function prepare(){
         return array($this->db->dsql()->table('foo'));
     }
