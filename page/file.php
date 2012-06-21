@@ -8,7 +8,7 @@ class page_file extends Page_Tester {
     }
     function test_import($f){
         // Imports file
-        return $f->import('../atk4/templates/shared/images/logo.png','copy')
+        return $f->import('atk4/templates/shared/images/logo.png','copy')
             ->set('filestore_type_id',$f->getFiletypeID())
             ->save()
             ->get('filename');
