@@ -26,7 +26,7 @@ class page_drilldown extends Page {
 
         $this->add('H4')->set('Manual Field');
         $f=$this->add('Form');
-        $f->addField('misc/Drilldown','my_field')->setModel('Category');
+        $f->addField('misc/drilldown','my_field')->setModel('Category');
 
         $this->add('H4')->set('Automatically Added By MVC');
         $f=$this->add('Form')->setModel('Category')->load($m->id);
