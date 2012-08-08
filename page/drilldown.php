@@ -3,26 +3,31 @@ class page_drilldown extends Page {
     function init(){
         parent::init();
         $this->populate();
-
+        
         $m=$this->add('Model_Category');
-
         $m->deleteAll();
+
         $m['name']='US';
         $m->saveAndUnload();
+        
         $m['name']='Europe';
         $m=$m->save()->ref('Category');
 
-        $m['name']='Italy';
-        $m->saveAndUnload();
-        $m['name']='UK';
-        $m=$m->save()->ref('Category');
-
-        $m['name']='London';
-        $m->save();
+            $m['name']='Italy';
+            $m->saveAndUnload();
+            
+            $m['name']='Latvia';
+            $m=$m->save()->ref('Category'); // to children
+                $m['name']='Riga';
+                $m->save()->ref('parent_id'); // back to parent
+        
+            $m['name']='UK';
+            $m=$m->save()->ref('Category'); // to children
+                $m['name']='London';
+                $m->save();
 
         $this->add('H4')->set('Contents of Categories');
         $this->add('Grid')->setModel('Category');
-
 
         $this->add('H4')->set('Manual Field');
         $f=$this->add('Form');
