@@ -9,7 +9,7 @@ class Page_UITest extends Page {
                 if(strtotime($a['created'])>strtotime('10 minutes ago'))return;
             }
             $this->js(true)->univ()->successMessage('Test data is too old, regenerating');
-        }catch(PDOException $e){
+        }catch(Exception $e){
             $this->js(true)->univ()->successMessage('Test data does not exist, regenerating');
         }
 

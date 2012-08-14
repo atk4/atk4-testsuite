@@ -31,6 +31,7 @@ class Model_Examples extends Model {
         sort($p);
         $this->setSource('ArrayAssoc',$p);
         $this->addHook('afterLoad',$this);
+
         return $this;
     }
     function skipped(){
@@ -39,6 +40,7 @@ class Model_Examples extends Model {
     }
     function afterLoad(){
         if($this['name']=='authtest.php' ||
+            $this['name']=='authcustom.php' || 
             $this['name']=='model1.php' || 
             $this['name']=='modeljoin.php' || 
             $this['name']=='parsetest.php' || 
@@ -96,9 +98,14 @@ class Frontend extends ApiFrontend {
 
 
 		$m=$this->add('Menu',null,'Menu');
-		$m->addMenuItem('Back','index');
+		$m->addMenuItem('index','Back');
         $this->dbConnect();
 	}
+    function recursiveRender(){
+        $this->page_object->js(true)->fadeIn();
+        return parent::recursiveRender();
+
+    }
     function page_index($page){
         /*
         $page->add('Link')->set('core','AbstractObject');

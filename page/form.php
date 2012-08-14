@@ -28,6 +28,9 @@ class page_form extends Page_UITest {
             }
         }
     }
+    function test_textarea(){
+        $this->add('Form')->addField('text','test');
+    }
     function test_setmodel(){
         $this->add('MVCForm')->setModel('X');
     }
@@ -35,7 +38,7 @@ class page_form extends Page_UITest {
         $cc=$this->add('Columns');
         $cc->addColumn(6)->add('Form')->setModel('Book');
         $m=$this->add('Model_Book');
-        $m->getField('author_id')->display('utocomplete');
+        //$m->getField('author_id')->display('autocomplete');
         $cc->addColumn(6)->add('Form')->setModel($m);
     }
 

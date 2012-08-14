@@ -1,27 +1,29 @@
 <?php
-class page_authtest extends Page {
-    function init(){
-        parent::init();
+class page_authcustom extends Page {
+	function init(){
+		parent::init();
 
-        // If you want to use whitelist-based auth check, call check() from Frontend.php, init() method
+		$m=$this->add('Model');
+		
         $auth=$this->add('Auth')->allow('admin','admin')->allow('demo','demo');
 
         if(!$auth->isLoggedIn()){
-            $this->api->add('View_Info')->set('Use "admin / admin" for a test-login');
+            $this->add('View_Info')->set('Use "admin / admin" for a test-login');
         }
-
-
-        $this->api->pathfinder->addLocation('..',array('addons'=>'atk4-addons'));
 
         if($_GET['logout']){
             $auth->logout();
             $this->api->redirect();
         }
 
-        $auth->add('auth/Controller_DummyPopup');
-        $auth->add('auth/Controller_Cookie');
+        if(!$auth->isLoggedIn()){
+        	$form=$this->add('Form');
+        	$form->addField('line','secret');
+        	return;
+        }
 
-        $auth->check();
+
+        
 
         $this->add('HtmlElement')
             ->setElement('P')
@@ -29,5 +31,8 @@ class page_authtest extends Page {
 
         $this->add('Button')->set('Logout')
             ->js('click')->univ()->location($this->api->url(null,array('logout'=>true)));
-    }
+
+
+
+	}
 }

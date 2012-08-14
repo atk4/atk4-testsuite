@@ -75,6 +75,23 @@ class page_model2 extends Page_Tester {
         $m->save();
         return $m['deleted'];
     }
+    function test_doubleand(){
+        $m=$this->add('Model_Book');
+        $m->addCondition('isbn','>=','a');
+        $m->addCondition('isbn','<=','a');
+        $m->debug();
+        $m->tryLoadAny();
+        return $m->loaded()?'inclusive':'exclusive';
+    }
+    function test_doubleandexpr(){
+        $m=$this->add('Model_Book');
+        $m->addExpression('age')->set('123');
+        $m->addCondition('age','>=',5);
+        $m->addCondition('age','<=',5);
+        $m->debug();
+        $m->tryLoadAny();
+        return $m->loaded()?'inclusive':'exclusive';
+    }
 
 
 }
