@@ -5,7 +5,9 @@ class page_ui_paginator extends Page {
 		
 		$tt=$this->add('Tabs');
 		$tt->addTab('Grid')->add('Grid')->setModel('MyModel')->owner->addPaginator(5);
-		//$tt->addTab('CompleteLister')->add('CompleteLister')->setModel('MyModel')->owner->add('Paginator',null,'rows');
+		$cl=$tt->addTab('CompleteLister')->add('CompleteLister');
+		$cl->setModel('MyModel');
+		$cl->add('Paginator',null,'Content')->ipp(5);
 	}
 }
 class Model_MyModel extends Model_Table {
