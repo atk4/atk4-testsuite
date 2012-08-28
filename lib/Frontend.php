@@ -41,6 +41,7 @@ class Model_Examples extends Model {
     function afterLoad(){
         if($this['name']=='authtest.php' ||
             $this['name']=='authcustom.php' || 
+            substr($this['name'],0,2) =='ui' ||
             $this['name']=='model1.php' || 
             $this['name']=='modeljoin.php' || 
             $this['name']=='parsetest.php' || 

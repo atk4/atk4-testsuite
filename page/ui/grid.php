@@ -1,16 +1,16 @@
 <?php
-class page_crud extends Page {
+class page_ui_grid extends Page {
     function init(){
         parent::init();
         //phpinfo();
         $this->api->db=$this->api->add('DB')->connect();
-        $crud = $this->add('CRUD');
-        $model=$crud->setModel('MyModel');
-        if($crud->grid){
-            $crud->grid->getColumn('name')->makeSortable();
-        }
-    }
+        $grid = $this->add('Grid');
+        $model=$grid->setModel('MyModel');
+        $grid->getColumn('name')->makeSortable();
 
+        $grid->addPaginator(5);
+        $grid->addTotals();
+    }
 }
 class Model_Client extends Model_Table {
     public $entity_code='client';
@@ -34,7 +34,6 @@ class Model_MyModel extends Model_Table {
             return 123;
         });
 
-        $x=$this->hasOne('Client');
-        $x->sortable(true)->caption('CLL');
+        $this->hasOne('Client')->sortable(true)->caption('CLLL');
     }
 }
