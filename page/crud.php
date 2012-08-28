@@ -34,6 +34,7 @@ class Model_MyModel extends Model_Table {
             return 123;
         });
 
-        $this->hasOne('Client')->sortable(true);
+        $x=$this->hasOne('Client');
+        $x->sortable(true)->caption('CLL');
     }
 }
