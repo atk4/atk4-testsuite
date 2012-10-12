@@ -94,28 +94,26 @@ class page_issue_so9163 extends Page {
 	}
     function initMainPage(){
 
-/*
+        try {
+
+	        $student = $this->add('Model_Student')->loadAny();
+	        $student_detail= $this->add('Model_Class');
+	        $student_detail->join('class_has_student.class_idclass','idclass')->addField('student_idstudent');
+	        $student_detail->addCondition('student_idstudent',$student->id);
+	        $view=$this->add('View',null,null,array('page/so9163/student_details'));
+	        $ClassList = $view->add('StudentClasses', null, 'ClassList');
+
+	        $view->setModel( $student );
+	        $ClassList->setModel( $student_detail );
+	    }catch(Exception $e){
+	    	$this->add('View_Error')->set('You must add some data first, then refresh page');
+	    }
+
     	$this->add('CRUD')->setModel('Subject');
     	$this->add('CRUD')->setModel('Class');
     	$this->add('CRUD')->setModel('Student');
     	$this->add('CRUD')->setModel('ClassHasStudent');
 
-*/
-
-
-        $view=$this->add('View',null,null,array('page/so9163/student_details'));
-
-//      $student = $this->add('Model_Student')->loadAny();
-
-
-        $student = $this->add('Model_Student')->loadAny();
-        $student_detail= $this->add('Model_Class');
-        $student_detail->join('class_has_student.class_idclass','idclass')->addField('student_idstudent');
-        $student_detail->addCondition('student_idstudent',$student->id);
-        $ClassList = $view->add('StudentClasses', null, 'ClassList');
-
-        $view->setModel( $student );
-        $ClassList->setModel( $student_detail->debug() );
 
     }
 }
