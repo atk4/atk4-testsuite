@@ -176,17 +176,6 @@ class page_model1 extends Page_Tester {
 
 }
 
-class Model_Book extends Model_Table {
-    public $table='book';
-    function init(){
-        parent::init();
-
-        $this->addField('name');
-        $this->addField('isbn');
-
-        $this->hasOne('Author');
-    }
-}
 class Model_Author extends Model_Table {
     public $table='author';
     function init(){

@@ -28,7 +28,7 @@ class Model_MyModel extends Model_Table {
     function init(){
         parent::init();
 
-        $this->addField('name')->defaultValue('John');
+        $this->addField('name')->defaultValue('John')->type('text');
 
         $this->addExpression('age')->set(function(){
             return 123;
