@@ -92,4 +92,9 @@ class page_order extends Page_DBTest {
     function test_setorder_chaining($t){
         return $m=$this->add('Model_Book')->setOrder('name','desc')->setOrder('isbn')->dsql();  // same as name
     }
+    function test_setorder_exprfield_with_commas($t){ // Issues 122, 123, 124
+        $m=$this->add('Model_Book');
+        $m->addExpression('exprfield')->set("concat(name,' - ',isbn)");
+        return $m->setOrder('exprfield')->dsql();
+    }
 }
