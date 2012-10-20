@@ -2,7 +2,6 @@
 
 class page_db extends Page_DBTest {
     public $db;
-
     public $proper_responses=array(
         "Test_raw_insert"=>array (
   0 => '',
@@ -89,43 +88,14 @@ class page_db extends Page_DBTest {
   ),
 ),
         "Test_row"=>array (
-  0 => 'Array
-(
-    [id] => 2
-    [name] => Peter
-    [a] => 2
-    [b] => 4
-    [c] => 7
-)
-',
+  0 => '{"id":"2","name":"Peter","a":"2","b":"4","c":"7"}',
   1 => 
   array (
     ':a' => 2,
   ),
 ),
         "Test_getAll"=>array (
-  0 => 'Array
-(
-    [0] => Array
-        (
-            [id] => 1
-            [name] => John
-            [a] => 1
-            [b] => 2
-            [c] => 3
-        )
-
-    [1] => Array
-        (
-            [id] => 2
-            [name] => Peter
-            [a] => 2
-            [b] => 4
-            [c] => 7
-        )
-
-)
-',
+  0 => '[{"id":"1","name":"John","a":"1","b":"2","c":"3"},{"id":"2","name":"Peter","a":"2","b":"4","c":"7"}]',
   1 => 
   array (
     ':a' => 1,
@@ -201,28 +171,7 @@ class page_db extends Page_DBTest {
   ),
 ),
         "Test_update2"=>array (
-  0 => 'Array
-(
-    [0] => Array
-        (
-            [id] => 1
-            [name] => Silvia
-            [a] => 1
-            [b] => 2
-            [c] => 3
-        )
-
-    [1] => Array
-        (
-            [id] => 2
-            [name] => Peter
-            [a] => 2
-            [b] => 4
-            [c] => 7
-        )
-
-)
-',
+  0 => '[{"id":"1","name":"Silvia","a":"1","b":"2","c":"3"},{"id":"2","name":"Peter","a":"2","b":"4","c":"7"}]',
   1 => 
   array (
     ':a' => 1,
@@ -245,7 +194,8 @@ class page_db extends Page_DBTest {
     ':a_3' => 9,
   ),
 )
-    );
+    );    
+
     function test_raw_insert($t){
         $this->db->query('insert into foo (name,a,b,c) values ("John", 1,2,3)');
         $this->db->query('insert into foo (name,a,b,c) values ("Peter", 2,4,7)');
@@ -306,10 +256,10 @@ class page_db extends Page_DBTest {
         return $t->foundRows();
     }
     function test_row($t){
-        return print_r($t->table('foo')->where('id',2)->fetch(),true);
+        return json_encode($t->table('foo')->where('id',2)->fetch());
     }
     function test_getAll($t){
-        return print_r($t->table('foo')->where('id',array(1,2))->get(),true);
+        return json_encode($t->table('foo')->where('id',array(1,2))->get(),true);
     }
     function test_iter1($t){
         foreach($t->table('foo')->where('id',array(1,2)) as $row){
@@ -360,7 +310,7 @@ class page_db extends Page_DBTest {
     function test_update2($t){
         $tt=clone $t;
         $tt->table('foo')->where('id','1')->set('name','Silvia')->update();
-        return print_r($t->table('foo')->where('id',array(1,2))->getAll(),true);
+        return json_encode($t->table('foo')->where('id',array(1,2))->getAll(),true);
     }
     function test_update_then_select($t){
         // executes update then returns select query
