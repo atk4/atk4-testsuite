@@ -284,6 +284,16 @@ class page_db extends Page_DBTest {
         }
         return "OPS";
     }
+    function test_iteriter($t){
+        $t1=$t2=0;
+        foreach($t->table('foo') as $row){
+            $t1++;
+        }
+        foreach($t as $row){
+            $t2++;
+        }
+        return "$t1=$t2";
+    }
     function test_ts($t){
         return $t->table('foo');
     }
