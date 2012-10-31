@@ -8,7 +8,7 @@ class Link extends HtmlElement {
         $this->setElement('a');
     }
     function set($name,$descr){
-        $this->setAttr('href',$this->api->getDestinationURL($name));
+        $this->setAttr('href',$this->api->url($name));
         return parent::set($descr);
     }
 }
