@@ -1,5 +1,5 @@
 <?php
-class Model_Book extends Model_Table {
+class Model_Book extends Model_Testbed_Book {
     public $table='book';
     function init(){
         parent::init();
@@ -8,5 +8,6 @@ class Model_Book extends Model_Table {
         $this->addField('isbn');
 
         $this->hasOne('Author');
+        $this->hasMany('Chapter');
     }
 }

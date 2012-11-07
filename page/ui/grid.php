@@ -28,7 +28,7 @@ class Model_MyModel extends Model_Table {
     function init(){
         parent::init();
 
-        $this->addField('name')->defaultValue('John');
+        $this->addField('name')->defaultValue('John')->sortable(true);
 
         $this->addExpression('age')->set(function(){
             return 123;

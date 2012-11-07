@@ -25,7 +25,7 @@ class page_model1 extends Page_Tester {
         $this->db=$this->add('DB');
 
         try {
-        //$this->db->query('drop table author');
+        $this->db->query('drop table author');
         }catch(PDOException $e){}try{
         $this->db->query('drop table book');
         }catch(PDOException $e){}try{
@@ -40,7 +40,7 @@ class page_model1 extends Page_Tester {
         $this->api->pathfinder->addLocation('..',array('addons'=>'atk4-addons'));
 
         $this->a=$a=$this->add($this->author_class);
-        $this->a->dsql()->truncate();
+        $this->a->deleteAll();
         
         $n=array('Anne','Jane','Aileen','John','Peter','Gavin','David','Marin','Skuja');
         $s=array('Smith','Blogs','Coder','Tester','Hacker');
@@ -129,6 +129,7 @@ class page_model1 extends Page_Tester {
         $a->loadBy('my_contact',30);
         $a['email']='test@example.org';
         $a->save();
+        var_Dump($a->get());
 
         $a->loadBy('my_contact',33);
         $a['email']='test@example.org';
@@ -137,6 +138,11 @@ class page_model1 extends Page_Tester {
         $a=clone $this->a;
         $a->addCondition('email','test@example.org');
         return $a->count()->getOne();
+    }
+    function test_loadbyExpr(){
+        $a = clone $this->a;
+        $a->loadBy($a->dsql()->andExpr()->where('my_contact',33)->where('email','test@example.org'));
+        return $a->loaded();
     }
     function test_rewinding(){
         $t1=$t2=0;
@@ -177,22 +183,4 @@ class page_model1 extends Page_Tester {
     }
 
 
-}
-
-class Model_Contact extends Model_Table {
-    public $table='contact';
-    function init(){
-        parent::init();
-
-        $this->addField('address');
-
-        $this->hasMany('Author','my_contact');
-        /*
-         * offers a minor speedup
-        $this->addHook('afterInsert',function($m,$id){
-            $m->id=$id;
-            $m->breakHook(false);
-        });
-         */
-    }
 }
