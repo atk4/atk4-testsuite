@@ -160,5 +160,12 @@ class page_core extends Page_Tester {
         return $res;
     }
 
+    function test_addon1($t){
+        return $t->add('helloworld/Core')->short_name;
+    }
+    function test_addon2($t){
+        return $t->add('helloworld\Core')->short_name;
+    }
+
 }
 
