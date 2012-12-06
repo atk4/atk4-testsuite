@@ -22,7 +22,7 @@ class page_dbwhere2 extends Page_DBTest {
   ),
 ),
         "Test_where_or4"=>array (
-  0 => 'select  * from `foo`  where (`i` = :a or `o` = :a_2)    ',
+  0 => 'select  * from `foo`  where (`i` is :a or `o` is :a_2)    ',
   1 => 
   array (
     ':a' => NULL,

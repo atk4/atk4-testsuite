@@ -103,7 +103,7 @@ class Install extends ApiInstall {
         $checks=array(
             array('PHP Version 5.3+',function($a){ return "OK"; }),
             array('Suhosin Settings',function($a){ return "OK"; }),
-            array('CURL (for API access)',function($a){ return method_exists('curl_open'); }),
+            array('CURL (for API access)',function($a){ return function_exists('curl_open'); }),
             array('Detected URL for this application',function($a){ return $a->pm->base_url.$a->saved_base_path; }),
             array('Base Folder',function($a){ return $a->getConfig('atk/base_path'); }),
         );
@@ -119,6 +119,9 @@ class Install extends ApiInstall {
         $g->addColumn('result');
 
         $g->setSource($results);
+        $g->model->addCache('Dumper');
+
+        
 
         $this->add('Button')->setHTML('Next &raquo;')->js('click')->univ()->location($this->stepURL('next'));
     }
@@ -178,16 +181,24 @@ class Install extends ApiInstall {
         $lic=$this->add('Model_AgileToolkit_Licenses');   // API for interacting on licenses
         $f=$this->add('Form');
 
+
         $acc->tryLoadAny();     // will try to connect to AgileToolkit
+
+        $acc['email']='romans';
+        $acc['password']='test';
+        $acc->auth();
+
+        var_Dump($_SESSION);
 
         if(!$acc->loaded()){
             $f->add('H2')->set('Access credentials for agiletoolkit.org');
             $f->setModel($acc);
+            $f->addSubmit()->set('Authenticate');
 
             // Authenticate
             if($f->isSubmitted()){
                 $f->update();
-
+                $f->js()->univ()->alert('Authenticated');
             }
         }
 

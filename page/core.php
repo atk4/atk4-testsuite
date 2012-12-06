@@ -33,7 +33,9 @@ class page_core extends Page_Tester {
         "Test_hook2"=>'1',
         "Test_hook3"=>'1',
         "Test_addMethod"=>'1',
-        "Test_addGlobalMethod"=>'1'
+        "Test_addGlobalMethod"=>'1',
+        "Test_addon1"=>'helloworld_core',
+        "Test_addon2"=>'helloworld_core'
     );
     function prepare(){
         return array($this->add('MyObject'));

@@ -9,7 +9,7 @@ class page_view extends Page_Tester {
         public $proper_responses=array(
         "Test_empty"=>'<p>Hello world</p>',
         "Test_frame"=>'
-<div id="sample_project_view_myinvisible_test_frame_frame" class="rounded atk-box white " style="">
+<div id="sample_project_view_myinvisible_test_frame_frame" class="rounded ui-widget-content ui-corner-all atk-box white " style="">
   <h2>FrameTitle</h2>
   <p>Hello world</p>
 </div>

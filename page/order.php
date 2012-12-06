@@ -103,9 +103,7 @@ class page_order extends Page_DBTest {
   ),
 ),
             "Test_order_subquery"=>array (
-  0 => 'Exception: Exception_Logic: Method is not defined for this object (class=Model_Author, method=hasMany, arguments=Array) in :<p id="sample_project_order_p" class="" style=""><a id="sample_project_order_p_view" class="" style="" href="#">More details</a>
-</p>
-',
+  0 => 'select  *,`book`.`id` from `book`     order by (select  `name` from `author`  where `author`.`id` = `book`.`author_id`    ) ',
   1 => 
   array (
   ),

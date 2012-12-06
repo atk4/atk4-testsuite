@@ -126,6 +126,12 @@ class page_db extends Page_DBTest {
     ':a_2' => 2,
   ),
 ),
+"Test_iteriter"=>array (
+  0 => '9=9',
+  1 => 
+  array (
+  ),
+),
         "Test_ts"=>array (
   0 => 'select  * from `foo`      ',
   1 => 
