@@ -23,7 +23,7 @@ class Model_Client extends Model_Table {
 
     }
 }
-class Model_MyModel extends Model_Table {
+class Model_MyModel extends Model_Table{
     public $table='user';
     function init(){
         parent::init();

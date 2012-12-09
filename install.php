@@ -103,15 +103,19 @@ class Install extends ApiInstall {
         $checks=array(
             array('PHP Version 5.3+',function($a){ return "OK"; }),
             array('Suhosin Settings',function($a){ return "OK"; }),
-            array('CURL (for API access)',function($a){ return function_exists('curl_open'); }),
+            array('CURL (for API access)',function($a){ return extension_loaded('curl'); }),
+            array('Memcache',function($a){ return class_exists('Memcache',false); }),
+            array('Memcached',function($a){ return class_exists('Memcached',false); }),
             array('Detected URL for this application',function($a){ return $a->pm->base_url.$a->saved_base_path; }),
             array('Base Folder',function($a){ return $a->getConfig('atk/base_path'); }),
         );
+
 
         $results=array();
         foreach($checks as $row){
             $r=array('name'=>$row[0]);
             $r['result']=call_user_func($row[1],$this);
+            if($r['result']===true)$r['result']='OK';
             $results[]=$r;
         }
         $g=$this->add('Grid');

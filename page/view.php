@@ -34,6 +34,23 @@ class page_view extends Page_Tester {
         $x->add('HelloWorld');
         return $x->getHTML();
     }
+    function test_lister($t){
+        $s3 = array(
+            array('a'=>1,'b'=>'John','name'=>'Smith'),
+            array('a'=>2,'b'=>'Joe','name'=>'Blogs')
+        );
+        $l=$this->add('Lister');
+        $l->setSource($s3);
+        return $l->getHTML();
+    }
+    function test_lister2($t){
+        $s3 = array(
+            'Smith','Blogs'
+        );
+        $l=$this->add('Lister');
+        $l->setSource($s3);
+        return $l->getHTML();
+    }
 
 }
 
