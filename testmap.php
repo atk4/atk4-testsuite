@@ -1,5 +1,5 @@
 <?php
-include'../atk4/loader.php';
+include'atk4/loader.php';
 
 class Installer extends ApiInstall {
 
@@ -14,7 +14,10 @@ class Installer extends ApiInstall {
         $this->js(true)->gm()->renderMapWithTimeout($map,500);
     }
 
+    function step_Step_Two(){
+        $this->add('LoremIpsum');
+    }
 }
 
-$api = new Installer('elexu');
+$api = new Installer('maps');
 $api->main();
