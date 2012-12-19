@@ -14,6 +14,11 @@ class Installer extends ApiInstall {
         $map->setCenter('51.5081289','-0.128005');
         $map->_renderMapJs('render_map');
         $this->js(true)->gm()->renderMapWithTimeout($map,500);
+
+        $b=$this->add('Button');
+        $b->add('misc/PageInFrame')->set('Title Here',function($page){
+            $this->add('LoremIpsum');
+        });
     }
 
     function step_Step_Two(){
