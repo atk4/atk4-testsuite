@@ -3,98 +3,98 @@
 class page_db extends Page_DBTest {
     public $db;
     public $proper_responses=array(
-        "Test_raw_insert"=>array (
+            "Test_raw_insert"=>array (
   0 => '',
   1 => 
   array (
   ),
 ),
-        "Test_raw_params"=>array (
+            "Test_raw_params"=>array (
   0 => '1',
   1 => 
   array (
   ),
 ),
-        "Test_raw_getOne"=>array (
+            "Test_raw_getOne"=>array (
   0 => 'John',
   1 => 
   array (
   ),
 ),
-        "Test_raw_select"=>array (
+            "Test_raw_select"=>array (
   0 => 'John, Peter, Ian, Steve, Robert, Lucas, Jane, Dot, Param',
   1 => 
   array (
   ),
 ),
-        "Test_simple"=>array (
+            "Test_simple"=>array (
   0 => 'select  `foo` from `bar`      ',
   1 => 
   array (
   ),
 ),
-        "Test_simple_tostring"=>array (
+            "Test_simple_tostring"=>array (
   0 => 'select  `foo` from `bar`      ',
   1 => 
   array (
   ),
 ),
-        "Test_simple_dot"=>array (
+            "Test_simple_dot"=>array (
   0 => 'select  `x`.foo.bar from `bar`      ',
   1 => 
   array (
   ),
 ),
-        "Test_multifields"=>array (
+            "Test_multifields"=>array (
   0 => 'select  `a`,`b`,`c` from `bar`      ',
   1 => 
   array (
   ),
 ),
-        "Test_multitable"=>array (
+            "Test_multitable"=>array (
   0 => 'select  `foo`.`a`,`foo`.`b`,`foo`.`c`,`bar`.`x`,`bar`.`y` from `bar`,`baz`      ',
   1 => 
   array (
   ),
 ),
-        "Test_selectall"=>array (
+            "Test_selectall"=>array (
   0 => 'select  * from `bar`      ',
   1 => 
   array (
   ),
 ),
-        "Test_select_opton1"=>array (
+            "Test_select_opton1"=>array (
   0 => 'select SQL_CALC_FOUND_ROWS * from `foo`      ',
   1 => 
   array (
   ),
 ),
-        "Test_select_calc_rows"=>array (
+            "Test_select_calc_rows"=>array (
   0 => 'select SQL_CALC_FOUND_ROWS * from `foo`      limit 0, 5',
   1 => 
   array (
   ),
 ),
-        "Test_select_calc_rows2"=>array (
+            "Test_select_calc_rows2"=>array (
   0 => '9',
   1 => 
   array (
   ),
 ),
-        "Test_select_calc_rows3"=>array (
-  0 => '9',
+            "Test_select_calc_rows3"=>array (
+  0 => '1',
   1 => 
   array (
   ),
 ),
-        "Test_row"=>array (
+            "Test_row"=>array (
   0 => '{"id":"2","name":"Peter","a":"2","b":"4","c":"7"}',
   1 => 
   array (
     ':a' => 2,
   ),
 ),
-        "Test_getAll"=>array (
+            "Test_getAll"=>array (
   0 => '[{"id":"1","name":"John","a":"1","b":"2","c":"3"},{"id":"2","name":"Peter","a":"2","b":"4","c":"7"}]',
   1 => 
   array (
@@ -102,7 +102,7 @@ class page_db extends Page_DBTest {
     ':a_2' => 2,
   ),
 ),
-        "Test_iter1"=>array (
+            "Test_iter1"=>array (
   0 => '1,John,1,2,3',
   1 => 
   array (
@@ -110,7 +110,15 @@ class page_db extends Page_DBTest {
     ':a_2' => 2,
   ),
 ),
-        "Test_doubleget"=>array (
+            "Test_iter2"=>array (
+  0 => '1,2',
+  1 => 
+  array (
+    ':a' => 1,
+    ':a_2' => 2,
+  ),
+),
+            "Test_doubleget"=>array (
   0 => '1',
   1 => 
   array (
@@ -118,7 +126,7 @@ class page_db extends Page_DBTest {
     ':a_2' => 2,
   ),
 ),
-        "Test_doubleiter"=>array (
+            "Test_doubleiter"=>array (
   0 => '1',
   1 => 
   array (
@@ -126,49 +134,55 @@ class page_db extends Page_DBTest {
     ':a_2' => 2,
   ),
 ),
-"Test_iteriter"=>array (
+            "Test_iteriter"=>array (
   0 => '9=9',
   1 => 
   array (
   ),
 ),
-        "Test_ts"=>array (
+            "Test_ts"=>array (
   0 => 'select  * from `foo`      ',
   1 => 
   array (
   ),
 ),
-        "Test_expr"=>array (
+            "Test_expr"=>array (
   0 => 'call foobar()',
   1 => 
   array (
   ),
 ),
-        "Test_expr2"=>array (
+            "Test_expr1"=>array (
+  0 => '(select 1)',
+  1 => 
+  array (
+  ),
+),
+            "Test_expr2"=>array (
   0 => 'select  (select 1) `x1`,3+3 `x2`        ',
   1 => 
   array (
   ),
 ),
-        "Test_expr3"=>array (
+            "Test_expr3"=>array (
   0 => 'acceptance',
   1 => 
   array (
   ),
 ),
-        "Test_expr4"=>array (
+            "Test_expr4"=>array (
   0 => 'foo',
   1 => 
   array (
   ),
 ),
-        "Test_expr5"=>array (
+            "Test_expr5"=>array (
   0 => 'foo..bar',
   1 => 
   array (
   ),
 ),
-        "Test_update"=>array (
+            "Test_update"=>array (
   0 => 'update `foo` set `name`=:a where `id` = :a_2',
   1 => 
   array (
@@ -176,7 +190,7 @@ class page_db extends Page_DBTest {
     ':a_2' => '1',
   ),
 ),
-        "Test_update2"=>array (
+            "Test_update2"=>array (
   0 => '[{"id":"1","name":"Silvia","a":"1","b":"2","c":"3"},{"id":"2","name":"Peter","a":"2","b":"4","c":"7"}]',
   1 => 
   array (
@@ -184,14 +198,14 @@ class page_db extends Page_DBTest {
     ':a_2' => 2,
   ),
 ),
-        "Test_update_then_select"=>array (
+            "Test_update_then_select"=>array (
   0 => 'select  * from `foo`  where `id` = :a    ',
   1 => 
   array (
     ':a' => 1,
   ),
 ),
-        "Test_insert_all"=>array (
+            "Test_insert_all"=>array (
   0 => '10,11',
   1 => 
   array (
@@ -200,7 +214,7 @@ class page_db extends Page_DBTest {
     ':a_3' => 9,
   ),
 )
-    );    
+        );
 
     function test_raw_insert($t){
         $this->db->query('insert into foo (name,a,b,c) values ("John", 1,2,3)');
@@ -273,6 +287,13 @@ class page_db extends Page_DBTest {
         }
         return 'OPS';
     }
+    function test_iter2($t){
+        $res=array();
+        $t->table('foo')->where('id',array(1,2))->each(function($row) use(&$res){
+            $res[]=$row['id'];
+        });
+        return join(',',$res);
+    }
     function test_doubleget($t){
         $t->table('foo')->where('id',array(1,2));
         return $t->get()==$t->get();
@@ -305,6 +326,9 @@ class page_db extends Page_DBTest {
     }
     function test_expr($t){
         return $t->expr('call foobar()');
+    }
+    function test_expr1($t){
+        return $t->expr('(select 1)');
     }
     function test_expr2($t){
         return $t

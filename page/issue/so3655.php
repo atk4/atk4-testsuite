@@ -47,7 +47,7 @@ class page_issue_so3655 extends Page {
 
 		$this->add('CRUD')->setModel('Grant');
 		$finances = $this->add('Model_Finances');
-		$finances->getField('fiscal_year')->setValueList($this->fiscalYears)->mandatory(true);
+		$finances->getField('fiscal_year')->mandatory(true);
 		$crud=$this->add('CRUD');
 		$crud->setModel($finances);
 		if($crud->grid)$crud->grid->addTotals(array('requested', 'committed', 'spent'));

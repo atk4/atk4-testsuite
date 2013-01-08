@@ -9,7 +9,7 @@ class Model_Author extends Model_Testbed_Author{
         $this->addField('email');
 
         $this->hasMany('Book');
-        //$this->hasOne('Contact','my_contact');  // one to one relation
+        $this->hasOne('Contact','my_contact');  // one to one relation
     }
 }
 

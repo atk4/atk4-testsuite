@@ -102,7 +102,7 @@ class page_db4 extends Page_DBTest {
     ); 
     function test_combi($t){
         $t->table('book')->where('id',1)->set('name','Foo');
-        return $t->SQLTemplate('select').' => '.$t->SQLTemplate('update');
+        return $t->SQLTemplate('select')->render().' => '.$t->SQLTemplate('update')->render();
     }
     function test_join1($t){
         return $t->table('user');

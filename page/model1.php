@@ -31,23 +31,27 @@ class page_model1 extends Page_Tester {
         }catch(PDOException $e){}try{
         $this->db->query('drop table contact');
         }catch(PDOException $e){}
-        //$this->db->query('create table author (id int not null primary key auto_increment, name varchar(255), email varchar(255),my_contact int)');
+        $this->db->query('create table author (id int not null primary key auto_increment, name varchar(255), email varchar(255),my_contact int)');
         $this->db->query('create table book (id int not null primary key auto_increment, name varchar(255), isbn varchar(255), author_id int)');
 
-        $this->db->query('create table contact (id int not null primary key auto_increment, address varchar(255), author_id int)');
+        $this->db->query('create table contact (id int not null primary key auto_increment, address varchar(255), line1 varchar(255), street varchar(255), author_id int)');
 
 
         $this->api->pathfinder->addLocation('..',array('addons'=>'atk4-addons'));
 
         $this->a=$a=$this->add($this->author_class);
         $this->a->deleteAll();
+
+        $a=$this->a;
+        $c = $a->addCache('Dumper','zz');
+        $c->setPrimarySource($a,'Array');
         
         $n=array('Anne','Jane','Aileen','John','Peter','Gavin','David','Marin','Skuja');
         $s=array('Smith','Blogs','Coder','Tester','Hacker');
 
         for($x=0;$x<100;$x++){
             $a['name']=$this->r($n).' '.$this->r($s);
-            $a->saveAndUnload();
+            $a->save();//AndUnload();
         }
 
 
@@ -129,7 +133,6 @@ class page_model1 extends Page_Tester {
         $a->loadBy('my_contact',30);
         $a['email']='test@example.org';
         $a->save();
-        var_Dump($a->get());
 
         $a->loadBy('my_contact',33);
         $a['email']='test@example.org';

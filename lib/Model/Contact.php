@@ -1,6 +1,6 @@
 <?php
 class Model_Contact extends Model_Testbed_Contact{
-    public $table='author';
+    public $table='contact';
     function init(){
         parent::init();
 
