@@ -16,8 +16,11 @@ class Installer extends ApiInstall {
         $this->js(true)->gm()->renderMapWithTimeout($map,500);
 
         $b=$this->add('Button');
-        $b->add('misc/PageInFrame')->set('Title Here',function($page){
-            $this->add('LoremIpsum');
+        $b->add('misc/PageInFrame')->bindEvent('click','Frame Title')->set(function($page){
+            $map=$page->add('google/View_Map');//->destroy();
+            $map->setCenter('51.5081289','-0.128005');
+            $map->_renderMapJs('render_map');
+            $this->js(true)->gm()->renderMapWithTimeout($map,500);
         });
     }
 
