@@ -4,23 +4,27 @@ class page_model1 extends Page_Tester {
     public $author_class='Model_Author';
     public $db;
     public $proper_responses=array(
-        "Test_populate"=>'100',
-        "Test_refmode_default"=>'1',
-        "Test_refmode_create"=>'1',
-        "Test_refmode_create2"=>'2',
-        "Test_refmode_create3"=>'3',
-        "Test_refmode_create4"=>'3',
-        "Test_refmode_link"=>'LOAD 45//-<br/>REF 45//<br/>SAVE 45/4/4<br/>RELOAD 45/4/-',
-        "Test_refmode_ignore"=>'45/4/',
-        "Test_refmode_load"=>'OK',
-        "Test_refmode_default2"=>'4',
-        "Test_populate2"=>'100',
-        "Test_clones"=>'0',
-        "Test_rewinding"=>'100=100',
-        "Test_multiref"=>'3',
-        "Test_many1"=>'3',
-        "Test_many2"=>'3'
-    );
+            "Test_populate"=>'100',
+            "Test_refmode_default"=>'1',
+            "Test_refmode_create"=>'1',
+            "Test_refmode_create2"=>'2',
+            "Test_refmode_create3"=>'3',
+            "Test_refmode_create4"=>'3',
+            "Test_refmode_link"=>'LOAD 45//-<br/>REF 45//<br/>SAVE 45/4/4<br/>RELOAD 45/4/-',
+            "Test_refmode_ignore"=>'45/4/',
+            "Test_refmode_load"=>'OK',
+            "Test_refmode_default2"=>'4',
+            "Test_populate2"=>'100',
+            "Test_clones"=>'0',
+            "Test_loadbyExpr"=>'Exception: BaseException: No matching records found (Raised by object=Object Model_Author(sample_project_model1_model_author_2)) in :<p id="sample_project_model1_loadbyExpr" class="" style=""><a id="sample_project_model1_loadbyExpr_view" class="" style="" href="#">More details</a>
+</p>
+',
+            "Test_rewinding"=>'100=100',
+            "Test_emptyafteriterate"=>'UNLOADED',
+            "Test_multiref"=>'3',
+            "Test_many1"=>'3',
+            "Test_many2"=>'3'
+        );
     function init(){
         $this->db=$this->add('DB');
 
@@ -51,7 +55,7 @@ class page_model1 extends Page_Tester {
 
         for($x=0;$x<100;$x++){
             $a['name']=$this->r($n).' '.$this->r($s);
-            $a->save();//AndUnload();
+            $a->saveAndUnload();
         }
 
 
@@ -157,6 +161,13 @@ class page_model1 extends Page_Tester {
             $t2++;
         }
         return $t1.'='.$t2;
+    }
+    function test_emptyafteriterate(){
+        $t1=0;
+        foreach($this->a as $junk){
+            $t1++;
+        }
+        return $this->a->loaded()?'LOADED':'UNLOADED';
     }
     function test_multiref(){
         $this->a->load(20)->ref('Book')->set('name','book1')->save();

@@ -71,6 +71,11 @@ class page_core extends Page_Tester {
     function test_hasElement2($t){
         return !$t->owner->hasElement('no such element');
     }
+    function test_uniqname($t){
+        $o1=$t->add('MyObject','c1');
+        $o2=$t->add('MyObject','c1');
+        return $o1->name!=$o2->name;
+    }
     function test_add($t){
         $o1=$t->add('MyObject','c1');
         $o2=$t->add('MyObject','c1');

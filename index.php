@@ -10,7 +10,8 @@
 // agile_project - this is realm. It should be unique per-project
 // jui - this is theme. Keep it jui unless you want to make your own theme
 
-include '../atk4/loader.php';
+require '../atk4/loader.php';
+require 'lib/Frontend.php';
 $api=new Frontend('sample_project');
 $api->main();
 ?>
