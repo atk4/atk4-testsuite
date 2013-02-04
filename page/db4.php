@@ -81,7 +81,7 @@ class page_db4 extends Page_DBTest {
   ),
 ),
         "Test_order2"=>array (
-  0 => 'select  * from `user`     order by `name`, `surname` ',
+  0 => 'select  * from `user`     order by `surname`, `name` ',
   1 => 
   array (
   ),

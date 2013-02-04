@@ -14,7 +14,7 @@ class page_order extends Page_DBTest {
   ),
 ),
             "Test_order_wrong_keyword"=>array (
-  0 => 'Exception: Exception_DB: Incorrect ordering keyword (order by=bleh) in :<p id="sample_project_order_p" class="" style=""><a id="sample_project_order_p_view" class="" style="" href="#">More details</a>
+  0 => 'Exception: Exception_DB: Incorrect ordering keyword (order by=bleh) in /Users/rw/Sites/atk42/atk4/lib/DB/dsql.php:1003<p id="sample_project_order_order_wrong_keyword" class="" style=""><a id="sample_project_order_order_wrong_keyword_view" class="" style="" href="#">More details</a>
 </p>
 ',
   1 => 
@@ -46,7 +46,7 @@ class page_order extends Page_DBTest {
   ),
 ),
             "Test_order_argcommas"=>array (
-  0 => 'Exception: Exception_DB: If first argument is array, second argument must not be used () in :<p id="sample_project_order_p" class="" style=""><a id="sample_project_order_p_view" class="" style="" href="#">More details</a>
+  0 => 'Exception: Exception_DB: If first argument is array, second argument must not be used () in /Users/rw/Sites/atk42/atk4/lib/DB/dsql.php:981<p id="sample_project_order_order_argcommas" class="" style=""><a id="sample_project_order_order_argcommas_view" class="" style="" href="#">More details</a>
 </p>
 ',
   1 => 
@@ -54,7 +54,7 @@ class page_order extends Page_DBTest {
   ),
 ),
             "Test_order_chaining"=>array (
-  0 => 'select  * from `book`     order by `name`, `isbn` desc ',
+  0 => 'select  * from `book`     order by `isbn` desc, `name` ',
   1 => 
   array (
   ),
@@ -115,7 +115,7 @@ class page_order extends Page_DBTest {
   ),
 ),
             "Test_setorder_nofield"=>array (
-  0 => 'Exception: BaseException: Child element not found (Raised by object=Object Model_Book(sample_project_order_model_book_5), element=nosuchfield) in :<p id="sample_project_order_p" class="" style=""><a id="sample_project_order_p_view" class="" style="" href="#">More details</a>
+  0 => 'Exception: BaseException: Child element not found (Raised by object=Object Model_Book(sample_project_order_model_book_5), element=nosuchfield) in :<p id="sample_project_order_setorder_nofield" class="" style=""><a id="sample_project_order_setorder_nofield_view" class="" style="" href="#">More details</a>
 </p>
 ',
   1 => 
@@ -135,7 +135,7 @@ class page_order extends Page_DBTest {
   ),
 ),
             "Test_setorder_argcomma"=>array (
-  0 => 'Exception: BaseException: If first argument is array, second argument must not be used (Raised by object=Object Model_Book(sample_project_order_model_book_8)) in :<p id="sample_project_order_p" class="" style=""><a id="sample_project_order_p_view" class="" style="" href="#">More details</a>
+  0 => 'Exception: BaseException: If first argument is array, second argument must not be used (Raised by object=Object Model_Book(sample_project_order_model_book_8)) in :<p id="sample_project_order_setorder_argcomma" class="" style=""><a id="sample_project_order_setorder_argcomma_view" class="" style="" href="#">More details</a>
 </p>
 ',
   1 => 
@@ -179,7 +179,7 @@ class page_order extends Page_DBTest {
   ),
 ),
             "Test_setorder_chaining"=>array (
-  0 => 'select  *,`book`.`id` from `book`     order by `book`.`name` desc, `book`.`isbn` ',
+  0 => 'select  *,`book`.`id` from `book`     order by `book`.`isbn`, `book`.`name` desc ',
   1 => 
   array (
   ),

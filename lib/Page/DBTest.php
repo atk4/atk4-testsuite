@@ -69,7 +69,9 @@ class Page_DBTest extends Page_Tester {
     }
     function formatResult(&$row,$key,$result){
         //parent::formatResult($row,$key,$result);
-        if($result instanceof DB_dsql)$result=$result->render();
+        if($result instanceof DB_dsql) {
+            $result=$result->render();
+        }
         $x=parent::formatResult($row,$key,$result);
         if($this->input[0]->params)$row[$key.'_para']=print_r($this->input[0]->params,true);
         return array($x,$this->input[0]->params);
