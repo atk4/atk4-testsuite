@@ -26,6 +26,12 @@ class Frontend extends ApiFrontend {
 		$m->addMenuItem('index','Back');
         $this->dbConnect();
 	}
+    function _($s){
+        if(strpos($s,"\xe2\x80\x8b")!==false){
+            throw new BaseException('String passed through _() twice');
+        }
+        return $s."\xe2\x80\x8b";
+    }
     function recursiveRender(){
         $this->page_object->js(true)->fadeIn();
         return parent::recursiveRender();
