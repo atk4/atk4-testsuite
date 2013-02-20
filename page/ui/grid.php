@@ -7,6 +7,11 @@ class page_ui_grid extends Page {
         $grid = $this->add('Grid');
         $model=$grid->setModel('MyModel');
         $grid->getColumn('name')->makeSortable();
+        $grid->addColumn('link','my_id','Id')
+        ->setTemplate('<a href="http://www.somelink.php?id=<?$my_id?>" target="_blank">'.
+            '<?$my_id?>'.'</a>');
+    
+        $grid->addColumn('expander','resource');
 
         $grid->addPaginator(5);
         $grid->addTotals();

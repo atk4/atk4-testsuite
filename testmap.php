@@ -10,17 +10,14 @@ class Installer extends ApiInstall {
     }
 
     function step_TestMap(){
-        $map=$this->add('google/View_Map');//->destroy();
-        $map->setCenter('51.5081289','-0.128005');
-        $map->_renderMapJs('render_map');
-        $this->js(true)->gm()->renderMapWithTimeout($map,500);
+        $map=$this->add('google/View_Map')->destroy();
 
         $b=$this->add('Button');
         $b->add('misc/PageInFrame')->bindEvent('click','Frame Title')->set(function($page){
             $map=$page->add('google/View_Map');//->destroy();
             $map->setCenter('51.5081289','-0.128005');
             $map->_renderMapJs('render_map');
-            $this->js(true)->gm()->renderMapWithTimeout($map,500);
+            $map->js(true)->gm()->renderMapWithTimeout($map,500);
         });
     }
 
