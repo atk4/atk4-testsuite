@@ -3,91 +3,115 @@
 class page_db3 extends Page_DBTest {
     public $db;
     public $proper_responses=array(
-        "Test_render1"=>array (
+            "Test_render1"=>array (
   0 => 'hello world',
   1 => 
   array (
   ),
 ),
-        "Test_render2"=>array (
+            "Test_render2"=>array (
   0 => 'hello `user`',
   1 => 
   array (
   ),
 ),
-        "Test_expr"=>array (
+            "Test_expr"=>array (
   0 => 'hello world',
   1 => 
   array (
   ),
 ),
-        "Test_recursive_render"=>array (
+            "Test_expr2"=>array (
+  0 => 'You must not pass :aa parameters to useExpr / expr anymore. Second arguments is used for custom tags',
+  1 => 
+  array (
+  ),
+),
+            "Test_expr3"=>array (
+  0 => 'hello John',
+  1 => 
+  array (
+  ),
+),
+            "Test_expr4"=>array (
+  0 => 'hello foo-val bar-val',
+  1 => 
+  array (
+  ),
+),
+            "Test_expr5"=>array (
+  0 => 'hello foo-val bar-val',
+  1 => 
+  array (
+  ),
+),
+            "Test_recursive_render"=>array (
   0 => 'hello 1+1',
   1 => 
   array (
   ),
 ),
-        "Test_render3"=>array (
+            "Test_render3"=>array (
   0 => 'hello [some_unknown_tag]',
   1 => 
   array (
   ),
 ),
-        "Test_field1"=>array (
+            "Test_field1"=>array (
   0 => 'select `name`',
   1 => 
   array (
   ),
 ),
-        "Test_field2"=>array (
+            "Test_field2"=>array (
   0 => 'select `name`,`surname`',
   1 => 
   array (
   ),
 ),
-        "Test_field3"=>array (
+            "Test_field3"=>array (
   0 => 'select `name`,`surname`',
   1 => 
   array (
   ),
 ),
-        "Test_field3a"=>array (
+            "Test_field3a"=>array (
   0 => 'select `user`.`name`,`address`.`postcode`',
   1 => 
   array (
   ),
 ),
-        "Test_field4"=>array (
+            "Test_field4"=>array (
   0 => 'select `address`.`name` `address_name`,`address`.`postcode`,`user`.`name`,`user`.`surname`',
   1 => 
   array (
   ),
 ),
-        "Test_field5"=>array (
+            "Test_field5"=>array (
   0 => 'select len(name) `name_length`',
   1 => 
   array (
   ),
 ),
-        "Test_field6"=>array (
+            "Test_field6"=>array (
   0 => 'select len(name)',
   1 => 
   array (
   ),
 ),
-        "Test_field_subquery1"=>array (
+            "Test_field_subquery1"=>array (
   0 => 'select  (select  sum(pages) `pages` from `book`  where `author_id` = `author`.`id`    ) `total_pages` from `author`      ',
   1 => 
   array (
   ),
 ),
-        "Test_union"=>array (
+            "Test_union"=>array (
   0 => '(select  * from `book`      ) UNION (select  * from `book`      )',
   1 => 
   array (
   ),
 )
-    );
+        );
     function test_render1($t){
         return $t->template('hello world');
     }
@@ -96,6 +120,28 @@ class page_db3 extends Page_DBTest {
     }
     function test_expr($t){
         return $t->useExpr('hello world');
+    }
+    function test_expr2($t){
+        try {
+            return $t->useExpr('hello :tag',array(':tag'=>'John'));
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+    }
+    function test_expr3($t){
+        return $t->useExpr('hello [tag]',array('tag'=>'John'));
+    }
+    function test_expr4($t){
+        return $t->useExpr('hello [foo] [bar]',array(
+            'foo'=>'foo-val',
+            'bar'=>$t->expr('bar-val')
+        ));
+    }
+    function test_expr5($t){
+        return $t->useExpr('hello [foo] [bar]')->setCustom(array(
+            'foo'=>'foo-val',
+            'bar'=>$t->expr('bar-val')
+        ));
     }
     function test_recursive_render($t){
         return $t->template('hello [table]')->table($t->expr('1+1'));
