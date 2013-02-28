@@ -47,8 +47,10 @@ class page_model1 extends Page_Tester {
         $this->a->deleteAll();
 
         $a=$this->a;
-        $c = $a->addCache('Dumper','zz');
-        $c->setPrimarySource($a,'Array');
+        if($a->hasMethod('addCache')){
+            $c = $a->addCache('Dumper','zz');
+            $c->setPrimarySource($a,'Array');
+        }
         
         $n=array('Anne','Jane','Aileen','John','Peter','Gavin','David','Marin','Skuja');
         $s=array('Smith','Blogs','Coder','Tester','Hacker');
