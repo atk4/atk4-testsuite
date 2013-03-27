@@ -56,24 +56,25 @@ class page_validator extends Page_Tester {
     }
 
     // Next - tests from the README.md
-    function example1($m){
-        $m->c->is(array(
+    function example1($c){
+        $c->is(array(
             'name,surname!|len|5..100',
             'addr1_postcode|to_alpha|to_trim|uk_zip?Not a UK postcode',
             'addr2_postcode|if|has_addr1|as|addr1_postcode'
-        ))->now();
-        //$m->hook('beforeSave');
+        ));
     }
 
-    function test_exa1($m){
-        $d=array(
+    function test_exa1(){
+        $c=$this->add('romaninsh/validation/Controller_Validator');
+        $this->example1($c);
+        $c->setSource(array(
             'name'=>'John',
             'surname'=>'Smith',
             'addr1_postcode'=>'E3 3CZ',
             'has_addr1'=>true,
             'addr2_postcode'=>'E3 3CZ',
-        );
-        $this->example1($m);
+        ));
+        return $c->now();
     }
 
 }
