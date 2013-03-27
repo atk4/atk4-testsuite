@@ -1,5 +1,20 @@
 <?php
 class page_validator extends Page_Tester {
+    public $proper_responses=array(
+        "Test_empty"=>'OK',
+        "Test_int"=>'OK',
+        "Test_int2"=>'must be integer​',
+        "Test_fail"=>'is incorrect​',
+        "Test_eq"=>'OK',
+        "Test_eq2"=>'must be equal to {{arg1}}​',
+        "Test_eq3"=>'must be equal to {{arg1}}​',
+        "Test_ne"=>'must not be {{arg1}}​',
+        "Test_ne2"=>'OK',
+        "Test_ne3"=>'OK',
+        "Test_exa1"=>'Exception: Exception_Logic: Method is not defined for this object​ (class=romaninsh\\validation\\Controller_Validator, method=setSource, arguments=Array) in /Users/rw/Sites/atk42/atk4/lib/AbstractObject.php:795<p id="sample_project_validator_exa1" class="" style=""><a id="sample_project_validator_exa1_view" class="" style="" href="#">More details</a>
+        </p>
+        '
+    );
     function prepare(){
         $m=$this->add('Model_Book');
         $m->set('name','Test Book');
