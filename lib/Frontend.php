@@ -38,14 +38,6 @@ class Frontend extends ApiFrontend {
 
     }
     function page_index($page){
-        /*
-        $page->add('Link')->set('core','AbstractObject');
-        $page->add('Link')->set('db','PDO compatible Database Tests');
-        $page->add('Link')->set('dbwhere','Where clause testing');
-        $page->add('Link')->set('dbparam','Parametric arguments and subqueries');
-
-        $this->add('Grid')->setModel('Examples');
-         */
         $m=$this->add('Model_Examples');
         $l=$this->add('Grid');
         $l->setModel('Examples');
