@@ -121,13 +121,6 @@ class page_db3 extends Page_DBTest {
     function test_expr($t){
         return $t->useExpr('hello world');
     }
-    function test_expr2($t){
-        try {
-            return $t->useExpr('hello :tag',array(':tag'=>'John'));
-        } catch (Exception $e) {
-            return $e->getMessage();
-        }
-    }
     function test_expr3($t){
         return $t->useExpr('hello [tag]',array('tag'=>'John'));
     }

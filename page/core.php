@@ -30,7 +30,7 @@ class page_core extends Page_Tester {
             "Test_exception"=>'1',
             "Test_exception2"=>'1',
             "Test_exception3"=>'1',
-            "Test_hook1"=>'',
+            "Test_hook1"=>'1',
             "Test_hook2"=>'1',
             "Test_hook3"=>'1',
             "Test_addMethod"=>'1',
@@ -96,7 +96,8 @@ class page_core extends Page_Tester {
         return $t->recall('foo');
     }
     function test_session2($t){
-        $t->learn('foo',null,true);
+        $t->learn('foo',true);
+        $t->learn('foo','123');
         return $t->recall('foo');
     }
     function test_session3($t){
@@ -142,12 +143,12 @@ class page_core extends Page_Tester {
     }
     function test_hook1($t){
         $t->addHook('test',array($this,'myfunc'));
-        $r=$t->hook('test',array($t));
+        $r=$t->hook('test');
         return $r[0]==42;
     }
     function test_hook2($t){
         $t->addHook('test',array($this,'myfunc'));
-        $r=$t->hook('test',array($t,true));
+        $r=$t->hook('test',array(true));
         return $r==65;
     }
     function test_hook3($t){

@@ -11,9 +11,6 @@ class page_validator extends Page_Tester {
         "Test_ne"=>'must not be {{arg1}}​',
         "Test_ne2"=>'OK',
         "Test_ne3"=>'OK',
-        "Test_exa1"=>'Exception: Exception_Logic: Method is not defined for this object​ (class=romaninsh\\validation\\Controller_Validator, method=setSource, arguments=Array) in /Users/rw/Sites/atk42/atk4/lib/AbstractObject.php:795<p id="sample_project_validator_exa1" class="" style=""><a id="sample_project_validator_exa1_view" class="" style="" href="#">More details</a>
-        </p>
-        '
     );
     function prepare(){
         $m=$this->add('Model_Book');
@@ -26,7 +23,7 @@ class page_validator extends Page_Tester {
         try {
             return parent::executeTest($test_obj,$test_func,$input);
         } catch (Exception_ValidityCheck $e) {
-            return $e->getMessage();
+            return $e->getField().': '.$e->getMessage();
         }
     }
     function test_empty($m){
@@ -89,8 +86,70 @@ class page_validator extends Page_Tester {
             'has_addr1'=>true,
             'addr2_postcode'=>'E3 3CZ',
         ));
-        return $c->now();
+        $c->now();return'FAIL';
     }
 
+    function test_exa2(){
+        $c=$this->add('romaninsh/validation/Controller_Validator');
+        $this->example1($c);
+        $c->setSource(array(
+            'name'=>'Stephen',
+            'surname'=>'Smith',
+            'addr1_postcode'=>'e3 3CZ',
+            'has_addr1'=>true,
+            'addr2_postcode'=>'E3 3CZ',
+        ));
+        $c->now();return'FAIL';
+    }
+
+    function test_exa3(){
+        $c=$this->add('romaninsh/validation/Controller_Validator');
+        $this->example1($c);
+        $c->setSource(array(
+            'name'=>'Stephen',
+            'surname'=>'',
+            'addr1_postcode'=>'e3 3CZ',
+            'has_addr1'=>true,
+            'addr2_postcode'=>'E3 3CZ',
+        ));
+        $c->now();return'FAIL';
+    }
+
+    function test_exa4(){
+        $c=$this->add('romaninsh/validation/Controller_Validator');
+        $this->example1($c);
+        $c->setSource(array(
+            'name'=>'Stephen',
+            'surname'=>'Hopkins',
+            'addr1_postcode'=>'E3 3CZ',
+            'has_addr1'=>true,
+            'addr2_postcode'=>'E3 3CZ',
+        ));
+        $c->now();return'OK';
+    }
+    function test_exa5(){
+        $c=$this->add('romaninsh/validation/Controller_Validator');
+        $this->example1($c);
+        $c->setSource(array(
+            'name'=>'Stephen',
+            'surname'=>'Hopkins',
+            'addr1_postcode'=>'E3 3CZ',
+            'has_addr1'=>true,
+            'addr2_postcode'=>false,
+        ));
+        $c->now();return'FAIL';
+    }
+    function test_exa6(){
+        $c=$this->add('romaninsh/validation/Controller_Validator');
+        $this->example1($c);
+        $c->setSource(array(
+            'name'=>'Stephen',
+            'surname'=>'Hopkins',
+            'addr1_postcode'=>'E3 3CZ',
+            'has_addr1'=>false,
+            'addr2_postcode'=>false,
+        ));
+        $c->now();return'OK';
+    }
 }
 
