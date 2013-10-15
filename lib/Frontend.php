@@ -14,6 +14,8 @@ class Frontend extends ApiFrontend {
 					))
 			->setParent($this->pathfinder->base_location);
         $this->api->pathfinder->addLocation('..',array('addons'=>'atk4-addons'));
+
+        $this->add('romaninsh/requestlog/Controller_RequestLog');
         //$this->add('russian/Controller_Translation');
 		$this->add('jUI');
 		$this->js()
@@ -22,7 +24,7 @@ class Frontend extends ApiFrontend {
 			;
 
 
-		$m=$this->add('Menu',null,'Menu');
+		$this->menu=$m=$this->add('Menu',null,'Menu');
 		$m->addMenuItem('index','Back');
         $this->dbConnect();
 	}

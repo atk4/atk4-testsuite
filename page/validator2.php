@@ -18,8 +18,9 @@ class page_validator2 extends Page_Tester {
         $m->is('name','eq','John')->save();
         return 'OK';
     }
-    function test_int($m){
-        $m->c->is('isbn|int')->now();
+    function test_otherhook($m){
+        $m->c->on('other_hook');
+        $m->is('name','eq','John')->save();
         return 'OK';
     }
     function test_int2($m){

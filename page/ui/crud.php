@@ -29,6 +29,9 @@ class Model_MyModel extends Model_Table{
         parent::init();
 
         $this->addField('name')->defaultValue('John')->type('text');
+        $this->addField('is_timereport')->type('boolean')
+            ->enum(array('Y','N'))
+            ->caption('Alert is set');
 
         $this->addExpression('age')->set(function(){
             return 123;

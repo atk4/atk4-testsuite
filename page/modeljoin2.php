@@ -1,57 +1,6 @@
 <?php
 
-class page_modeljoin extends Page_DBTest {
-    public $db;
-    public $proper_responses=array(
-        "Test_j1"=>array (
-            0 => 'select  *,`book`.`id` from `book` inner join `author` as `_a` on `_a`.`id` = `book`.`author_id`     ',
-            1 => 
-            array (
-            ),
-        ),
-        "Test_j2"=>array (
-            0 => 'select  *,`book`.`id` from `book` inner join `author` as `_a` on `_a`.`id` = `book`.`author_id` inner join `book_info` as `_b` on `_b`.`id` = `book`.`book_info_id`     ',
-            1 => 
-            array (
-            ),
-        ),
-        "Test_j3"=>array (
-            0 => 'Peter',
-            1 => 
-            array (
-            ),
-        ),
-        "Test_j4"=>array (
-            0 => 'select  `a`.`id`,`a`.`name`,`a`.`email`,`bbx`.`isbn`,`bbx`.`author_id` `bbx` from `author` `a` inner join `book` as `bbx` on `bbx`.`author_id` = `a`.`id`     ',
-            1 => 
-            array (
-            ),
-        ),
-        "Test_j5"=>array (
-            0 => 'select  `book`.`id`,`book`.`name`,`book`.`isbn`,`book`.`pages`,`book`.`author_id`,(select  `a`.`name` from `author` `a`  where `book`.`author_id` = `a`.`id`    ) `author`,`_a`.`email`,`_a`.`birth`,`_c`.`address`,`book`.`author_id` `_a`,`_c`.`author_id` `_c` from `book` inner join `author` as `_a` on `_a`.`id` = `book`.`author_id` inner join `contact` as `_c` on `_c`.`author_id` = `_a`.`id`     ',
-            1 => 
-            array (
-            ),
-        ),
-        "Test_j6"=>array (
-            0 => '3, Peter, 123123, 123, 3, , j@mail.com, 2001-02-03, IL9',
-            1 => 
-            array (
-            ),
-        ),
-        "Test_j7"=>array (
-            0 => '3, Peter, 123123, 444, 3, , j@mail.com, 2002-02-03, IL10',
-            1 => 
-            array (
-            ),
-        ),
-        "Test_ref"=>array (
-            0 => '1',
-            1 => 
-            array (
-            ),
-        )
-    );
+class page_modeljoin2 extends Page_DBTest {
     function init(){
         $this->db=$this->add('DB');
 
@@ -71,20 +20,21 @@ class page_modeljoin extends Page_DBTest {
         parent::init();
     }
     function prepare(){
-        $this->mb=$this->add('Model_BookAuthor');
+        $this->mb=$this->add('Model_BookAuthor2');
         return array($this->mb->_dsql());
     }
+    /*
     function test_j1(){
-        $m=$this->add('Model_BookAuthor');
+        $m=$this->add('Model_BookAuthor2');
         return $m->dsql();
     }
     function test_j2(){
-        $m=$this->add('Model_BookAuthor');
+        $m=$this->add('Model_BookAuthor2');
         $m->join('book_info','book_info_id');
         return $m->dsql();
     }
     function test_j3(){
-        $m=$this->add('Model_BookAuthor');
+        $m=$this->add('Model_BookAuthor2');
         $m->set('name','John');
         $m->set('email','j@mail.com');
         $m->save();
@@ -96,7 +46,7 @@ class page_modeljoin extends Page_DBTest {
         return $m['name'];
     }
     function test_j4(){
-        $m=$this->add('Model_AuthorBook');
+        $m=$this->add('Model_AuthorBook2');
         $m->set('name','John');
         $m->set('email','j@mail.com');
         $m->save();
@@ -108,7 +58,7 @@ class page_modeljoin extends Page_DBTest {
         return $m->dsql();
     }
     function test_j5(){
-        $m=$this->add('Model_BookAuthorContact');
+        $m=$this->add('Model_BookAuthorContact2');
         $m->set('name','John');
         $m->set('email','j@mail.com');
         $m->save();
@@ -121,7 +71,7 @@ class page_modeljoin extends Page_DBTest {
         return $m->dsql();
     }
     function test_j6(){
-        $m=$this->add('Model_BookAuthorContact');
+        $m=$this->add('Model_BookAuthorContact2');
         $m->addCondition('name','Peter');
         $m->addCondition('email','j@mail.com');
         $m->addCondition('isbn','123123');
@@ -133,7 +83,7 @@ class page_modeljoin extends Page_DBTest {
         return join(', ',$m->get());
     }
     function test_j7(){
-        $m=$this->add('Model_BookAuthorContact');
+        $m=$this->add('Model_BookAuthorContact2');
         foreach($m as $junk){
             $m['address']='IL10';
             $m['pages']=444;
@@ -145,17 +95,18 @@ class page_modeljoin extends Page_DBTest {
     }
     function test_ref($q){
         try{
-            $m1=$this->add('Model_Author')->loadBy('email','j@mail.com');
+            $m1=$this->add('Model_Author2')->loadBy('email','j@mail.com');
             return count($m1->ref('Book'));
         }catch(Exception $e){
             $this->api->caughtException( $e);
         }
     }
+     */
 
 
 }
 
-class Model_Book extends Model_Table {
+class Model_Book2 extends Model_Table {
     public $table='book';
     function init(){
         parent::init();
@@ -164,51 +115,54 @@ class Model_Book extends Model_Table {
         $this->addField('isbn');
         $this->addField('pages')->type('int');
 
-        $this->hasOne('Author');
+        $this->hasOne('Author2');
     }
 }
-class Model_Author extends Model_Table {
+class Model_Author2 extends Model_Table {
     public $table='author';
-    public $table_alias='a';
     function init(){
         parent::init();
 
         $this->addField('name');
         $this->addField('email');
 
-        $this->hasMany('Book');
+        $this->hasMany('Book2');
+    }
+}
+class Model_Contact2 extends Model_Table {
+    public $table='contact';
+    function init(){
+        parent::init();
+
+        $this->addField('address');
+
+        $this->hasMany('Author2');
     }
 }
 
-class Model_BookAuthor extends Model_Book {
+class Model_BookAuthor2 extends Model_Book2 {
     public $a;
     function init(){
         parent::init();
-        $this->a=$this->join('author');
-        $this->a->addField('email');
-        $this->a->addField('birth')->type('date');
+        $this->a=$this->joinModel('Author2');
     }
 }
 
-class Model_AuthorBook extends Model_Author {
+class Model_AuthorBook2 extends Model_Author2 {
     public $b;
     function init(){
         parent::init();
 
-        $this->b=$this->join('book.author_id',null,'inner','bbx');
-
-        $this->b->addField('isbn');
-
-
+        $this->b=$this->joinModel('Book2');
     }
 }
 
-class Model_BookAuthorContact extends Model_BookAuthor {
+class Model_BookAuthorContact2 extends Model_BookAuthor2 {
     function init(){
         parent::init();
 
-        $this->c=$this->a->join('contact.author_id');
-        $this->c->addField('address');
+        $this->a->joinModel('Contact2');
     }
 }
+
 
