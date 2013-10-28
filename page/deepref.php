@@ -1,4 +1,11 @@
 <?php
+class page_deepref extends Page_Tester {
+
+    function init() {
+        parent::init();
+        $this->skipTests('Not ready');
+    }
+
 
     function test_loaded_one($b){
         return $b->load(1)->ref('author_id');
@@ -92,4 +99,4 @@
         // grand-kids of a person who wrote book with id=1
         return $b->addCondition('id',1)->ref('author_id/Kids/Kids');
     }
-
+}

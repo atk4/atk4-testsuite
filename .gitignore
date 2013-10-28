@@ -1,3 +1,5 @@
+vendor
+composer.lock
 atk4
 atk4-addons
 /blog

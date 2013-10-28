@@ -1,35 +1,17 @@
 {
-		"name": "atk4/atk4-testsuite",
-		"description": "Test-Sutie for Agile Toolkit",
-		"license": "GPL-3.0",
+    "name": "atk4/atk4-testsuite",
+    "description": "test-sutie for agile toolkit",
+    "license": "gpl-3.0",
 
-        "repositories": [ { "type": "composer", "url": "http://agiletoolkit.org/" } ],
-		
-		"require": {
-			"atk4/atk4": "dev-master",
-            "atk4/highcharts": "dev-master",
-            "evilscott/junior": "dev-master",
-            "romaninsh/queue": "dev-master",
-            "romaninsh/validation": "dev-master",
-            "bshaffer/oauth2-server-php": "dev-develop",
-            "atk4/autocomplete": "dev-master",
-            "php": ">=5.3.0",
-            "ext-curl": "*",
-            "ext-json": "*",
-            "endroid/qrcode": "dev-master",
-            "agile55/ga": "dev-master",
+    "repositories": [ { "type": "composer", "url": "http://agiletoolkit.org/" } ],
 
+    "autoload": {
+        "psr-0": {"": "lib/"}
+    },
 
-            "opauth/opauth": ">=0.4.3",
-            "opauth/facebook": "dev-master",
-            "opauth/twitter": "dev-master",
-            "opauth/google": "dev-master",
-            "opauth/linkedin": "dev-master",
-            "opauth/paypal": "dev-master",
-            "romaninsh/opauth": "dev-master",
-            "facebook/php-sdk": "dev-master",
-
-
-            "dflydev/markdown": "dev-master"
-		}
+    "require": {
+        "atk4/atk4": "dev-master",
+        "atk4/atk4-tests": "dev-master",
+        "atk4/testsuite": "dev-master"
+    }
 }

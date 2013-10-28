@@ -3,6 +3,7 @@ class page_cache extends Page {
     function init(){
 
         parent::init();
+        $this->skipTests('Temporary disabled');
 
         $this->add('FatView');
 

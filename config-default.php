@@ -9,5 +9,4 @@ $config['dsn']='mysql://root:root@localhost/project';
 $config['url_postfix']='';
 $config['url_prefix']='?page=';
 
-$config['logger']['log_output']='full';
 
