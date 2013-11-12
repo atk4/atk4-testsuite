@@ -3,16 +3,16 @@
    Commonly you would want to re-define ApiFrontend for your own application.
  */
 
-class Frontend extends ApiFrontend {
+class Frontend extends Api_Admin {
 	function init(){
 		parent::init();
 
-        $this->add('jUI');
 
-		$this->menu=$m=$this->add('Menu',null,'Menu');
-		$m->addMenuItem('index','Back');
-        $this->dbConnect();
+
+		$this->menu->setModel('testsuite/Collection');
+        $this->menu->dest_var='';
 	}
+    /*
     function page_index($page){
         $l = $this->add('Grid');
         $l->setModel('AgileTest');
@@ -25,4 +25,5 @@ class Frontend extends ApiFrontend {
             $l->current_row_html['name'] = $n;
         });
     }
+     */
 }

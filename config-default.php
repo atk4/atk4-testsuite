@@ -9,4 +9,6 @@ $config['dsn']='mysql://root:root@localhost/project';
 $config['url_postfix']='';
 $config['url_prefix']='?page=';
 
-
+$config['addons']['active']=array(
+    'atk4/atk4tests',
+);
